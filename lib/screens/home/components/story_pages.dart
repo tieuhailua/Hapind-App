@@ -15,14 +15,14 @@ import 'package:http/http.dart' as http;
 
 import 'slider.dart';
 
-class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
+class StoryPage extends StatefulWidget {
+  const StoryPage({Key? key}) : super(key: key);
 
   @override
-  State<MainPage> createState() => _MainPageState();
+  State<StoryPage> createState() => _StoryPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _StoryPageState extends State<StoryPage> {
   List<SwipeItem> swipeItems = <SwipeItem>[];
   List<int> imageIndexList = List.generate(10, (index) => 0);
   MatchEngine matchEngine = MatchEngine();
@@ -53,7 +53,7 @@ class _MainPageState extends State<MainPage> {
           name: Faker().person.firstName(),
           photos: [
             'https://i.pravatar.cc/${800 + index}',
-            ...List.generate(Random().nextInt(5) + 1,
+            ...List.generate(Random().nextInt(5) + 2,
                 (photoIndex) => 'https://picsum.photos/${800 + photoIndex}'),
           ],
           text: '',
@@ -94,30 +94,28 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar( title:  Image.asset('assets/icons/logo1.png', width: 200,height: 180, ),
-      automaticallyImplyLeading: false, 
+      appBar: AppBar(
+        title: Image.asset(
+          'assets/icons/logo1.png',
+          width: 200,
+          height: 180,
+        ),
+        automaticallyImplyLeading: false,
       ),
       backgroundColor: Colors.white,
       body: SafeArea(
-       
         child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 14),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                 
-
-                  // Text('I Love You hapind', style: TextStyle(color: const Color.fromARGB(255, 255, 0, 0)),),
-                  // const Icon(
-                  //   CupertinoIcons.bell_fill,
-                  //   color: Color(0xFF7E858F),
-                  // ),
-                ],
+                children: [],
               ),
             ),
-           SizedBox(height: 6,),
+            SizedBox(
+              height: 6,
+            ),
             Expanded(
               child: Stack(
                 children: [

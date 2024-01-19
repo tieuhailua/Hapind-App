@@ -12,18 +12,18 @@ import '../../../size_config.dart';
 class SignForm extends StatefulWidget {
   @override
   _SignFormState createState() => _SignFormState();
-  
 }
 
 class _SignFormState extends State<SignForm> {
   final _formKey = GlobalKey<FormState>();
   String? email = "lua@gmail.com";
-  String? password="12345678";
+  String? password = "12345678";
   bool? remember = false;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final List<String?> errors = [];
 
+  String savedEmail = "";
   void addError({String? error}) {
     if (!errors.contains(error))
       setState(() {
@@ -40,7 +40,6 @@ class _SignFormState extends State<SignForm> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Form(
       key: _formKey,
       child: Column(
@@ -55,10 +54,11 @@ class _SignFormState extends State<SignForm> {
                 value: remember,
                 activeColor: kPrimaryColor,
                 onChanged: (value) {
-                  if(value == null)
-                  setState(() {
-                    remember = value;
-                  });
+                  if (value == null)
+                    setState(() {
+                      remember = value ;
+                      
+                    });
                 },
               ),
               Text("Remember me"),
@@ -81,6 +81,8 @@ class _SignFormState extends State<SignForm> {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 // if all are valid then go to success screen
+               
+
                 KeyboardUtil.hideKeyboard(context);
                 Navigator.pushNamed(context, LoginSuccessScreen.routeName);
               }
@@ -103,13 +105,13 @@ class _SignFormState extends State<SignForm> {
         }
         return null;
       },
-      validator: (String ?value) {
+      validator: (String? value) {
         // ignore: unnecessary_null_comparison
         if (value!.isEmpty || value == null) {
-        //  addError(error: kPassNullError);
+          //  addError(error: kPassNullError);
           return "Please Enter your password";
-        } else if (value.length < 8 ) {
-         // addError(error: kShortPassError);
+        } else if (value.length < 8) {
+          // addError(error: kShortPassError);
           return "Password is too short";
         }
         return null;
@@ -127,7 +129,7 @@ class _SignFormState extends State<SignForm> {
 
   TextFormField buildEmailFormField() {
     return TextFormField(
-       controller: emailController,
+      controller: emailController,
       keyboardType: TextInputType.emailAddress,
       onSaved: (newValue) => email = newValue,
       onChanged: (value) {
@@ -138,12 +140,13 @@ class _SignFormState extends State<SignForm> {
         }
         return null;
       },
-      validator: (String ?value) {
-        if ( value == null|| value.isEmpty) {
-        //  addError(error: kEmailNullError);
+      validator: (String? value) {
+        if (value == null || value.isEmpty) {
+          //  addError(error: kEmailNullError);
           return "Please Enter your email";
-        } else if (!emailValidatorRegExp.hasMatch(value)|| email != emailController.text) {
-        //  addError(error: kInvalidEmailError);
+        } else if (!emailValidatorRegExp.hasMatch(value) ||
+            email != emailController.text) {
+          //  addError(error: kInvalidEmailError);
           return "Please Enter Valid Email ";
         }
         return null;

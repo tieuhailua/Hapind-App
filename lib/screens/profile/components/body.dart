@@ -15,10 +15,11 @@ class Body extends StatelessWidget {
           ProfilePic(),
           SizedBox(height: 20),
           ProfileMenu(
-            text: "My Account",
-            icon: "assets/icons/User Icon.svg",
-            press: ()  { Navigator.pushNamed(context,MyAccount.routeName);}
-          ),
+              text: "My Account",
+              icon: "assets/icons/User Icon.svg",
+              press: () {
+                Navigator.pushNamed(context, MyAccount.routeName);
+              }),
           ProfileMenu(
             text: "Notifications",
             icon: "assets/icons/Bell.svg",
@@ -38,8 +39,37 @@ class Body extends StatelessWidget {
             text: "Log Out",
             icon: "assets/icons/Log out.svg",
             press: () {
-            Navigator.pushNamed(context, SignInScreen.routeName);
+              // Hiển thị hộp thoại xác nhận
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Confirm"),
+                    content: Text("Are you sure you want to sign out?"),
+                    actions: [
+                      // Nút "Đồng ý"
+                      TextButton(
+                        onPressed: () {
+                          // Sau khi đăng xuất thành công, đóng hộp thoại
+                          Navigator.of(context).pop();
 
+                          // Chuyển hướng đến màn hình đăng nhập
+                          Navigator.pushNamed(context, SignInScreen.routeName);
+                        },
+                        child: Text("Agree"),
+                      ),
+                      // Nút "Không đồng ý"
+                      TextButton(
+                        onPressed: () {
+                          // Đóng hộp thoại nếu người dùng không muốn đăng xuất
+                          Navigator.of(context).pop();
+                        },
+                        child: Text("Disagree"),
+                      ),
+                    ],
+                  );
+                },
+              );
             },
           ),
         ],

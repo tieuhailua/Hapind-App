@@ -3,7 +3,6 @@ import 'package:hapind/components/no_account_text.dart';
 import 'package:hapind/components/socal_card.dart';
 import '../../../size_config.dart';
 import 'sign_form.dart';
-
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -37,7 +36,9 @@ class Body extends StatelessWidget {
                   children: [
                     SocalCard(
                       icon: "assets/icons/google-icon.svg",
-                      press: () {},
+                      press: () {
+                        
+                      },
                     ),
                     SocalCard(
                       icon: "assets/icons/facebook-2.svg",
@@ -58,4 +59,6 @@ class Body extends StatelessWidget {
       ),
     );
   }
+
+  
 }
