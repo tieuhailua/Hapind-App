@@ -8,12 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hapind/models/home.dart';
 import 'package:hapind/screens/details/details_page.dart';
+import 'package:hapind/screens/home/components/filter.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'package:swipe_cards/draggable_card.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import 'package:http/http.dart' as http;
-
-import 'slider.dart';
 
 class StoryPage extends StatefulWidget {
   const StoryPage({Key? key}) : super(key: key);
@@ -29,6 +28,9 @@ class _StoryPageState extends State<StoryPage> {
   bool isNope = false;
   bool isLike = false;
   bool isSuperLike = false;
+  late List usersData;
+  final GlobalKey<ScaffoldMessengerState> scaffoldKey =
+      GlobalKey<ScaffoldMessengerState>();
   final String url = "https://randomuser.me/api/?results=50";
   String _avatarUr =
       "https://res.cloudinary.com/dxlcsubez/image/upload/f_auto,q_auto/e44w6saipufr4qhbtesw";
@@ -95,10 +97,25 @@ class _StoryPageState extends State<StoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset(
-          'assets/icons/logo1.png',
-          width: 200,
-          height: 180,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Container(
+              width: 200,
+              height: 180,
+              child: Image.asset(
+                'assets/icons/logo1.png',
+                fit: BoxFit.cover,
+              ),
+            ),
+            IconButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Filter()));
+                },
+                icon: const Icon(Icons.filter_alt_outlined, size: 25))
+          ],
         ),
         automaticallyImplyLeading: false,
       ),

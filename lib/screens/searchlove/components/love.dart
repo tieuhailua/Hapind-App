@@ -29,6 +29,10 @@ class _MainPageState extends State<MainPage> {
   bool isNope = false;
   bool isLike = false;
   bool isSuperLike = false;
+  late List usersData;
+  final GlobalKey<ScaffoldMessengerState> scaffoldKey =
+    GlobalKey<ScaffoldMessengerState>();
+  final String url = "https://randomuser.me/api/?results=50";
   String _avatarUr =
       "https://res.cloudinary.com/dxlcsubez/image/upload/f_auto,q_auto/e44w6saipufr4qhbtesw";
 Future getData() async {

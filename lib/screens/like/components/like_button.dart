@@ -7,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hapind/models/home.dart';
-import 'package:hapind/screens/home/components/slider.dart';
 import 'package:hapind/screens/like/like.dart';
 import 'package:hapind/screens/search/search_screen.dart';
 import 'package:path/path.dart';
@@ -33,7 +32,10 @@ class _LikeState extends State<LikePage> {
   bool isSuperLike = false;
   late List usersData;
   final String url = "https://randomuser.me/api/?results=50";
-
+  
+  final GlobalKey<ScaffoldMessengerState> scaffoldKey =
+    GlobalKey<ScaffoldMessengerState>();
+  
   String _avatarUr =
       "https://res.cloudinary.com/dxlcsubez/image/upload/f_auto,q_auto/e44w6saipufr4qhbtesw";
 Future getData() async {
