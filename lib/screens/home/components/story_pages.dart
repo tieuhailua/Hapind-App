@@ -589,7 +589,7 @@ class _StoryPageState extends State<StoryPage> {
                                   border: Border.all(
                                     color: const Color(0xFF66C4F2),
                                   ),
-                                  color: isNope
+                                  color: isSuperLike
                                       ? const Color(0xFF66C4F2)
                                       : Colors.transparent,
                                 ),
@@ -598,7 +598,7 @@ class _StoryPageState extends State<StoryPage> {
                                   icon: SvgPicture.asset(
                                     'assets/icons/star.svg',
                                     width: 20,
-                                    color: isNope ? Colors.white : null,
+                                    color: isSuperLike ? Colors.white : null,
                                   ),
                                   onPressed: () {
                                     matchEngine.currentItem?.superLike();
@@ -613,7 +613,7 @@ class _StoryPageState extends State<StoryPage> {
                                   border: Border.all(
                                     color: const Color(0xFF6EE6BA),
                                   ),
-                                  color: isNope
+                                  color:isLike
                                       ? const Color(0xFF6EE6BA)
                                       : Colors.transparent,
                                 ),
@@ -622,7 +622,7 @@ class _StoryPageState extends State<StoryPage> {
                                   icon: SvgPicture.asset(
                                     'assets/icons/heart.svg',
                                     width: 20,
-                                    color: isNope ? Colors.white : null,
+                                    color: isLike ? Colors.white : null,
                                   ),
                                   onPressed: () {
                                     matchEngine.currentItem?.like();

@@ -507,7 +507,7 @@ Future getData() async {
                                   border: Border.all(
                                     color: const Color(0xFF6EE6BA),
                                   ),
-                                  color: isNope
+                                  color: isLike
                                       ? const Color(0xFF6EE6BA)
                                       : Colors.transparent,
                                 ),
@@ -516,7 +516,7 @@ Future getData() async {
                                   icon: SvgPicture.asset(
                                     'assets/icons/heart.svg',
                                     width: 20,
-                                    color: isNope ? Colors.white : null,
+                                    color: isLike ? Colors.white : null,
                                   ),
                                   onPressed: () {
                                     matchEngine.currentItem?.like();
