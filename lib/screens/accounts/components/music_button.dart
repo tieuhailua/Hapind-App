@@ -1,16 +1,5 @@
 import 'package:flutter/material.dart';
 
-enum ExerciseFilter {
-  HipHop,
-  POp,
-  Bolero,
-  Javacom,
-  lyduchao,
-  buingocminh,
-  buiminhtin,
-  Tieuhailua
-}
-
 class MusicButton extends StatefulWidget {
   const MusicButton({
     super.key,
@@ -23,13 +12,21 @@ class MusicButton extends StatefulWidget {
 }
 
 class _MusicButtonState extends State<MusicButton> {
-  Set<ExerciseFilter> filters = <ExerciseFilter>{};
   String folderName = 'Music';
 
   @override
   Widget build(BuildContext context) {
     // ignore: unused_local_variable
     final TextTheme textTheme = Theme.of(context).textTheme;
+    List<String> filters = [
+      'minh tin',
+      'Duc Hao',
+      'Hai lua tieu',
+      'Bui van Bi',
+      'Phat do'
+    ];
+    // Selected filters
+    List<String> selectedFilters = [];
 
     return ElevatedButton(
       onPressed: () {
@@ -38,42 +35,50 @@ class _MusicButtonState extends State<MusicButton> {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           builder: (BuildContext context) {
-            return Container(
-              height: 250,
-              width: 500,
-              // Your bottom sheet content here
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Wrap(
-                    spacing: 3.0,
-                    children:
-                        ExerciseFilter.values.map((ExerciseFilter exercise) {
-                      return FilterChip(
-                        label: Text(exercise.name),
-                        selected: filters.contains(exercise),
-                        onSelected: (bool selected) {
-                          setState(() {
-                            if (selected) {
-                              filters.add(exercise);
-                            } else {
-                              filters.remove(exercise);
-                            }
-                          });
-                        },
-                      );
-                    }).toList(),
-                  ),
-                  ElevatedButton(
-                    child: const Text('Close'),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-
-                  // Add more options as needed
-                ],
-              ),
-            );
+            return StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+              return Container(
+                height: 250,
+                width: 500,
+                child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Select Filters',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 10.0),
+                      Wrap(
+                        spacing: 8.0,
+                        runSpacing: 8.0,
+                        children: filters.map((filter) {
+                          return FilterChip(
+                            label: Text(filter),
+                            selected: selectedFilters.contains(filter),
+                            onSelected: (bool selected) {
+                              setState(() {
+                                if (selected) {
+                                  selectedFilters.add(filter);
+                                } else {
+                                  selectedFilters.remove(filter);
+                                }
+                              });
+                            },
+                          );
+                        }).toList(),
+                      ),
+                      SizedBox(height: 10.0),
+                      ElevatedButton(
+                        child: const Text('Close'),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ]),
+              );
+            });
           },
         );
       },
@@ -96,9 +101,7 @@ class _MusicButtonState extends State<MusicButton> {
         margin: const EdgeInsets.only(bottom: 8),
         padding: const EdgeInsets.symmetric(horizontal: 20),
         height: 65,
-        decoration: BoxDecoration(
-            color: Color.fromARGB(255, 237, 235, 235),
-            borderRadius: BorderRadius.circular(20)),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Row(

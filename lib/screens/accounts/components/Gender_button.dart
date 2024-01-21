@@ -104,7 +104,7 @@ class _GenderButtonState extends State<GenderButton> {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         height: 65,
         decoration: BoxDecoration(
-            color: Color.fromARGB(255, 237, 235, 235),
+           
             borderRadius: BorderRadius.circular(15)),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [

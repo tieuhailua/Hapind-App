@@ -1,80 +1,80 @@
 import 'package:flutter/material.dart';
-enum ExerciseFilter {
-  HipHop,
-  POp,
-  Bolero,
-  Javacom,
-  lyduchao,
-  buingocminh,
-  buiminhtin,
-  Tieuhailua
-}
 
 class TestButton extends StatefulWidget {
   const TestButton({super.key, required this.folderName});
- final String folderName;
+  final String folderName;
 
   @override
   State<TestButton> createState() => _TestButtonState();
-  
 }
 
 class _TestButtonState extends State<TestButton> {
-  Set<ExerciseFilter> filters = <ExerciseFilter>{};
   String folderName = 'Test1';
-  
 
   @override
   Widget build(BuildContext context) {
     // ignore: unused_local_variable
     final TextTheme textTheme = Theme.of(context).textTheme;
-   
+    List<String> filters = [
+      'minh tin',
+      'Duc Hao',
+      'Hai lua tieu',
+      'Bui van Bi',
+      'Phat do'
+    ];
+    // Selected filters
+    List<String> selectedFilters = [];
     return ElevatedButton(
       onPressed: () {
         showModalBottomSheet(
           context: context,
-          shape: const RoundedRectangleBorder(
-            // <-- SEE HERE
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(25.0),
-            ),
-          ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           builder: (BuildContext context) {
-            return Container(
-              height: 250,
+            return StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+              return Container(
+                height: 250,
                 width: 500,
-              // Your bottom sheet content here
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Wrap(
-                    spacing: 5.0,
-                    children:
-                        ExerciseFilter.values.map((ExerciseFilter exercise) {
-                      return FilterChip(
-                        label: Text(exercise.name),
-                        selected: filters.contains(exercise),
-                        onSelected: (bool selected) {
-                          setState(() {
-                            if (selected) {
-                              filters.add(exercise);
-                            } else {
-                              filters.remove(exercise);
-                            }
-                          });
-                        },
-                      );
-                    }).toList(),
-                  ),
-                  ElevatedButton(
-                    child: const Text('Close'),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                 
-                  // Add more options as needed
-                ],
-              ),
-            );
+                child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Select Filters',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 10.0),
+                      Wrap(
+                        spacing: 8.0,
+                        runSpacing: 8.0,
+                        children: filters.map((filter) {
+                          return FilterChip(
+                            label: Text(filter),
+                            selected: selectedFilters.contains(filter),
+                            onSelected: (bool selected) {
+                              setState(() {
+                                if (selected) {
+                                  selectedFilters.add(filter);
+                                } else {
+                                  selectedFilters.remove(filter);
+                                }
+                              });
+                            },
+                          );
+                        }).toList(),
+                      ),
+                      SizedBox(height: 10.0),
+                      ElevatedButton(
+                        child: const Text('Close'),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ]),
+              );
+            });
           },
         );
       },
@@ -84,7 +84,7 @@ class _TestButtonState extends State<TestButton> {
         side: MaterialStateProperty.all<BorderSide>(
           // Đường viền của button
           BorderSide(
-            color: const Color.fromARGB(255, 216, 214, 214),
+            color: Color.fromARGB(255, 215, 213, 213),
           ),
         ),
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -98,8 +98,8 @@ class _TestButtonState extends State<TestButton> {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         height: 65,
         decoration: BoxDecoration(
-            color: Color.fromARGB(255, 237, 235, 235),
-            borderRadius: BorderRadius.circular(20)),
+            
+            borderRadius: BorderRadius.circular(30)),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Row(
@@ -108,9 +108,11 @@ class _TestButtonState extends State<TestButton> {
                 width: 10,
               ),
               Text(
+                
                 folderName,
-                style: const TextStyle(
-                    fontSize: 16, color: Color.fromARGB(255, 236, 82, 5)),
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 4, 4, 4)),
               )
             ],
           ),
@@ -118,11 +120,11 @@ class _TestButtonState extends State<TestButton> {
             onPressed: () {},
             icon: const Icon(
               Icons.keyboard_arrow_down,
-              color: Colors.grey,
+              color: Color.fromARGB(255, 6, 6, 6),
             ),
           )
         ]),
       ),
     );
   }
-  }
+}

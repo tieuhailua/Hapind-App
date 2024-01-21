@@ -100,7 +100,6 @@ class _MyAccount extends State<MyAccount> {
               const Divider(
                 height: 60,
               ),
-              // số ít
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
@@ -113,43 +112,28 @@ class _MyAccount extends State<MyAccount> {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              // ... Other widgets ...
+              SizedBox(height: 10),
               // Folder List
-              TestButton(
-                folderName: "Test",
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              GenderButton(folderName: "Gender", callback: callback),
-              SizedBox(
-                height: 10,
-              ),
-              WorkButton(folderName: "Work"),
-              SizedBox(
-                height: 10,
-              ),
-              SmokingButton(folderName: "Smoking"),
-              SizedBox(
-                height: 10,
-              ),
-              PurposeButton(folderName: 'Purpose'),
-              SizedBox(
-                height: 10,
-              ),
-              LiteracyButton(folderName: 'Literacy'),
-              SizedBox(
-                height: 10,
-              ),
-              HabitButton(folderName: 'Habit'),
-              SizedBox(
-                height: 10,
-              ),
-              FamilyButton(folderName: ' Family '),
-              //số nhiều
-
+              Flexible(child: TestButton(folderName: "Test")),
+              SizedBox(height: 10),
+              Flexible(
+                  child:
+                      GenderButton(folderName: "Gender", callback: callback)),
+              SizedBox(height: 10),
+              Flexible(child: WorkButton(folderName: "Work")),
+              SizedBox(height: 10),
+              Flexible(child: SmokingButton(folderName: "Smoking")),
+              SizedBox(height: 10),
+              Flexible(child: PurposeButton(folderName: 'Purpose')),
+              SizedBox(height: 10),
+              Flexible(child: LiteracyButton(folderName: 'Literacy')),
+              SizedBox(height: 10),
+              Flexible(child: HabitButton(folderName: 'Habit')),
+              SizedBox(height: 10),
+              Flexible(child: FamilyButton(folderName: ' Family ')),
+              SizedBox(height: 10),
+              // ... Other widgets ...
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
@@ -162,98 +146,23 @@ class _MyAccount extends State<MyAccount> {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 10,
-              ),
-              MusicButton(
-                folderName: "Music",
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              SingerButton(
-                folderName: "SinGer",
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              PetButton(folderName: 'Pet'),
-              SizedBox(
-                height: 10,
-              ),
-              LanguageButton(folderName: "Language"),
-              SizedBox(
-                height: 10,
-              ),
-              HobbyButton(folderName: "Hobby"),
-              SizedBox(
-                height: 10,
-              ),
-              ExerciseButton(folderName: "Exercise"),
+              SizedBox(height: 10),
+              Flexible(child: MusicButton(folderName: "Music")),
+              SizedBox(height: 10),
+              Flexible(child: SingerButton(folderName: "SinGer")),
+              SizedBox(height: 10),
+              Flexible(child: PetButton(folderName: 'Pet')),
+              SizedBox(height: 10),
+              Flexible(child: LanguageButton(folderName: "Language")),
+              SizedBox(height: 10),
+              Flexible(child: HobbyButton(folderName: "Hobby")),
+              SizedBox(height: 10),
+              Flexible(child: ExerciseButton(folderName: "Exercise")),
             ],
           ),
         )
       ]),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-    );
-  }
-
-  Widget buildProjectRow(String folderName) {
-    return GestureDetector(
-      onTap: () {
-        showModalBottomSheet<void>(
-          context: context,
-          builder: (BuildContext context) {
-            return Container(
-              height: 200,
-              color: const Color.fromARGB(255, 244, 243, 240),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    const Text('Modal BottomSheet'),
-                    ElevatedButton(
-                      child: const Text('Close BottomSheet'),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-        );
-      },
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 8),
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        height: 65,
-        decoration: BoxDecoration(
-            color: Colors.grey.shade200,
-            borderRadius: BorderRadius.circular(15)),
-        child:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Row(
-            children: [
-              const SizedBox(
-                width: 12,
-              ),
-              Text(
-                folderName,
-                style: const TextStyle(
-                    fontSize: 16, color: Color.fromARGB(255, 224, 224, 223)),
-              )
-            ],
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.keyboard_arrow_down,
-              color: Colors.grey,
-            ),
-          )
-        ]),
-      ),
     );
   }
 

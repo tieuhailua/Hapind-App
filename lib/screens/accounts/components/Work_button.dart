@@ -88,7 +88,7 @@ class _WorkButtonState extends State<WorkButton> {
         ),
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(20),
           ),
         ),
       ),
@@ -97,8 +97,8 @@ class _WorkButtonState extends State<WorkButton> {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         height: 65,
         decoration: BoxDecoration(
-            color: Color.fromARGB(255, 237, 235, 235),
-            borderRadius: BorderRadius.circular(20)),
+           
+            borderRadius: BorderRadius.circular(30)),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Row(
