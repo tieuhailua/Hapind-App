@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hapind/screens/setting/setting.dart';
+import 'package:hapind/screens/terms/TermsInstructions.dart';
 import 'package:hapind/screens/accounts/Edit_account.dart';
 import 'package:hapind/screens/sign_in/sign_in_screen.dart';
 
@@ -25,15 +27,16 @@ class Body extends StatelessWidget {
             icon: "assets/icons/Bell.svg",
             press: () {},
           ),
+          
+          ProfileMenu(
+            text: "Terms & Instructions",
+            icon: "assets/icons/Question mark.svg",
+            press: () {Navigator.pushNamed(context, TermsInstrucstions.routeName);},
+          ),
           ProfileMenu(
             text: "Settings",
             icon: "assets/icons/Settings.svg",
-            press: () {},
-          ),
-          ProfileMenu(
-            text: "Help Center",
-            icon: "assets/icons/Question mark.svg",
-            press: () {},
+           press: () {Navigator.pushNamed(context, Setting.routeName);},
           ),
           ProfileMenu(
             text: "Log Out",

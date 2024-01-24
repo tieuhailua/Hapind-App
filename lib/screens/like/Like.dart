@@ -39,6 +39,7 @@ class _LikesPageState extends State<LikesPage> {
                 likes_json.length.toString() + " Likes",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
+              
             ],
           ),
         ),

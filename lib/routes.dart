@@ -1,7 +1,6 @@
-
-
-
 import 'package:flutter/widgets.dart';
+import 'package:hapind/screens/setting/setting.dart';
+import 'package:hapind/screens/terms/TermsInstructions.dart';
 import 'package:hapind/screens/home/home_screen.dart';
 import 'package:hapind/screens/accounts/Edit_account.dart';
 import 'package:hapind/screens/cart/cart_screen.dart';
@@ -37,12 +36,12 @@ final Map<String, WidgetBuilder> routes = {
   DetailsScreen.routeName: (context) => DetailsScreen(),
   CartScreen.routeName: (context) => CartScreen(),
   ProfileScreen.routeName: (context) => ProfileScreen(),
-  SearchScreen.routeName:(context) => SearchScreen(),
-  SearchLoveScreen.routeName:(context) => SearchLoveScreen(),
-  LikesPage.routeName:(context) =>LikesPage(),
-  MyAccount.routeName:(context) => MyAccount(folderName: ""),
-  
-  ChatsScreen.routeName:(context) => ChatsScreen(),
-   MessagesScreen.routeName:(context)=> MessagesScreen(),
-  
+  SearchScreen.routeName: (context) => SearchScreen(),
+  SearchLoveScreen.routeName: (context) => SearchLoveScreen(),
+  LikesPage.routeName: (context) => LikesPage(),
+  MyAccount.routeName: (context) => MyAccount(folderName: ""),
+  TermsInstrucstions.routeName: (context) => TermsInstrucstions(),
+  Setting.routeName:(context) => Setting(),
+  ChatsScreen.routeName: (context) => ChatsScreen(),
+  MessagesScreen.routeName: (context) => MessagesScreen(),
 };
