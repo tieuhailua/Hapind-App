@@ -79,11 +79,9 @@ class __SearchScreenState extends State<SearchScreen> {
                                   const EdgeInsets.only(top: 190, right: 10),
                               child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
+                                    foregroundColor: Colors.white, backgroundColor: Colors.white, shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(18.0),
                                     ),
-                                    primary: Colors.white, // background
-                                    onPrimary: Colors.white,
                                   ),
                                   child: const Text(
                                     'TRY NOW',
