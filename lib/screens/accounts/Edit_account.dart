@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:hapind/model/user_image.dart';
 import 'package:hapind/screens/accounts/components/%20family_buttton.dart';
 import 'package:hapind/screens/accounts/components/%20purpose_button.dart';
 import 'package:hapind/screens/accounts/components/Exercise_button.dart';
@@ -9,10 +12,17 @@ import 'package:hapind/screens/accounts/components/hobby_button.dart';
 import 'package:hapind/screens/accounts/components/language_button.dart';
 import 'package:hapind/screens/accounts/components/literacy_button.dart';
 import 'package:hapind/screens/accounts/components/music_button.dart';
+import 'package:hapind/screens/accounts/components/one_to_many.dart';
+import 'package:hapind/screens/accounts/components/one_to_one_button.dart';
+import 'package:hapind/screens/accounts/components/one_to_one_button2.dart';
 import 'package:hapind/screens/accounts/components/pet_button.dart';
 import 'package:hapind/screens/accounts/components/singer_button.dart';
 import 'package:hapind/screens/accounts/components/smoking_button.dart';
 import 'package:hapind/screens/accounts/components/test_button.dart';
+import 'package:hapind/service/login_service.dart';
+import 'package:hapind/service/token_service.dart';
+import 'package:hapind/service/upload_service.dart';
+import 'package:image_picker/image_picker.dart';
 
 class MyAccount extends StatefulWidget {
   static String routeName = "/account";
@@ -25,11 +35,19 @@ class MyAccount extends StatefulWidget {
 
 class _MyAccount extends State<MyAccount> {
   double availableScreenWidth = 0;
+  List<String> imageUrls = List.generate(6, (index) => "");
   int selectedIndex = 0;
   String _gender = "Gender";
+  UploadService _uploadService = UploadService();
+  TokenService _tokenService = TokenService();
+  LoginService _loginService = LoginService();
+  List<UserImage>? userImages;
+  bool _loading = true;
+
   callback(key, item) {
-    setState(() {
+    setState(() async {
       print("===== ${item}");
+      print(await _tokenService.readUserId());
       _gender = item;
     });
   }
@@ -37,11 +55,58 @@ class _MyAccount extends State<MyAccount> {
   String _avatarUrl =
       //"https://res.cloudinary.com/dxlcsubez/image/upload/f_auto,q_auto/e44w6saipufr4qhbtesw";
       "https://res.cloudinary.com/dxlcsubez/image/upload/f_auto,q_auto/lpckjnidqulkymh6r1da";
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   print('====== ${widget.folderName}');
+  //   Future.delayed(Duration.zero).then((_) {
+  //     initializeData();
+  //   });
+  //   setState(() async {
+  //     print(await _tokenService.readUserId());
+  //   });
+  // }
+
+  // Future<void> initializeData() async {
+  //   await getUserImage();
+  // }
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     print('====== ${widget.folderName}');
+    Future.delayed(Duration.zero).then((_) {
+      initializeData();
+    });
+
+    // Create a FocusNode
+    FocusNode textFocusNode = FocusNode();
+
+    // Request focus after a delay
+    Future.delayed(Duration.zero).then((_) {
+      FocusScope.of(context).requestFocus(textFocusNode);
+    });
+  }
+
+  Future<void> initializeData() async {
+    await getUserImage();
+  }
+
+  Future<void> getUserImage() async {
+    int? userId = await _tokenService.getStoredUserId();
+    ;
+    print(userId);
+    userImages = await _uploadService.getUserImage(userId);
+    setState(() async {
+      for (int i = 0; i <= imageUrls.length; i++) {
+        imageUrls[i] = userImages != null && i <= userImages!.length
+            ? userImages![i].imagePath ?? ''
+            : '';
+        print(imageUrls[i]);
+        _loading = false;
+        //imageUrls =List.generate(userImages!.length?);
+      }
+    });
   }
 
   @override
@@ -70,15 +135,15 @@ class _MyAccount extends State<MyAccount> {
               ),
               Row(
                 children: [
-                  buildFileColumn(),
+                  buildFileColumn(0),
                   SizedBox(
                     width: availableScreenWidth * .03,
                   ),
-                  buildFileColumn(),
+                  buildFileColumn(1),
                   SizedBox(
                     width: availableScreenWidth * .03,
                   ),
-                  buildFileColumn(),
+                  buildFileColumn(2),
                 ],
               ),
               const SizedBox(
@@ -86,15 +151,15 @@ class _MyAccount extends State<MyAccount> {
               ),
               Row(
                 children: [
-                  buildFileColumn(),
+                  buildFileColumn(3),
                   SizedBox(
                     width: availableScreenWidth * .03,
                   ),
-                  buildFileColumn(),
+                  buildFileColumn(4),
                   SizedBox(
                     width: availableScreenWidth * .03,
                   ),
-                  buildFileColumn(),
+                  buildFileColumn(5),
                 ],
               ),
               const Divider(
@@ -116,40 +181,88 @@ class _MyAccount extends State<MyAccount> {
               const SizedBox(
                 height: 20,
               ),
-              // Folder List
-              TestButton(
-                folderName: "Test",
+              OneToOne2(
+                folderName: "Description",
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              OneToOne2(
+                folderName: "Address",
               ),
               SizedBox(
                 height: 10,
               ),
-              GenderButton(folderName: "Gender", callback: callback),
+              OneToOne2(
+                folderName: "Height",
+              ),
               SizedBox(
                 height: 10,
               ),
-              WorkButton(folderName: "Work"),
+              OneToOne2(
+                folderName: "Weight",
+              ),
               SizedBox(
                 height: 10,
               ),
-              SmokingButton(folderName: "Smoking"),
+              OneToOne2(
+                folderName: "Gender",
+              ),
               SizedBox(
                 height: 10,
               ),
-              PurposeButton(folderName: 'Purpose'),
+              OneToOne2(
+                folderName: "Finding",
+              ),
               SizedBox(
                 height: 10,
               ),
-              LiteracyButton(folderName: 'Literacy'),
+              OneToOne2(
+                folderName: "Purpose",
+              ),
               SizedBox(
                 height: 10,
               ),
-              HabitButton(folderName: 'Habit'),
+              OneToOne2(
+                folderName: "Drinking",
+              ),
               SizedBox(
                 height: 10,
               ),
-              FamilyButton(folderName: ' Family '),
+              OneToOne2(
+                folderName: "Smoking",
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              OneToOne2(
+                folderName: "Habit",
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              OneToOne2(
+                folderName: "Family",
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              OneToOne2(
+                folderName: "Literacy",
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              OneToOne2(
+                folderName: "Work",
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              OneToOne2(
+                folderName: "Zodiac",
+              ),
               //số nhiều
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
@@ -165,31 +278,38 @@ class _MyAccount extends State<MyAccount> {
               SizedBox(
                 height: 10,
               ),
-              MusicButton(
+              OneToMany(
                 folderName: "Music",
               ),
               SizedBox(
                 height: 10,
               ),
-              SingerButton(
-                folderName: "SinGer",
+              OneToMany(
+                folderName: "Singer",
               ),
               SizedBox(
                 height: 10,
               ),
-              PetButton(folderName: 'Pet'),
+              OneToMany(folderName: 'Pet'),
               SizedBox(
                 height: 10,
               ),
-              LanguageButton(folderName: "Language"),
+              OneToMany(folderName: "Language"),
               SizedBox(
                 height: 10,
               ),
-              HobbyButton(folderName: "Hobby"),
+              OneToMany(folderName: "Hobby"),
               SizedBox(
                 height: 10,
               ),
-              ExerciseButton(folderName: "Exercise"),
+              OneToMany(folderName: "Exercise"),
+              SizedBox(
+                height: 10,
+              ),
+              OneToMany(folderName: "Expecting"),
+              SizedBox(
+                height: 10,
+              ),
             ],
           ),
         )
@@ -257,24 +377,170 @@ class _MyAccount extends State<MyAccount> {
     );
   }
 
-  Column buildFileColumn() {
+  // Column buildFileColumn() {
+  //   return Column(
+  //     children: [
+  //       Container(
+  //           width: availableScreenWidth * .31,
+  //           decoration: BoxDecoration(
+  //               color: Colors.grey.shade200,
+  //               borderRadius: BorderRadius.circular(20)),
+  //           padding: const EdgeInsets.all(38),
+  //           height: 150,
+  //           child: Align(
+  //             alignment: Alignment.bottomRight,
+  //             child: IconButton(
+  //               icon: Icon(Icons.add_circle),
+  //               color: Theme.of(context).primaryColor,
+  //               onPressed: () async {
+  //                 final pickedFile =
+  //                     await ImagePicker().pickImage(source: ImageSource.gallery);
+  //                 if (pickedFile != null) {
+  //                   // You have the picked image file, now upload it to Cloudinary
+  //                   _uploadService.uploadToCloudinary(File(pickedFile.path));
+  //                 }
+  //               },
+  //             ),
+  //           )),
+  //     ],
+  //   );
+  // }
+
+  // Column buildFileColumn(int index) {
+  //   if (index < 0 || index >= imageUrls.length) {
+  //     return Column(); // Return an empty column if index is out of bounds
+  //   }
+
+  //   String imageUrl = imageUrls[index];
+  //   int userImageId = userImages != null && index <= userImages!.length
+  //       ? userImages![index].id ?? 0
+  //       : 0;
+  //   return Column(
+  //     children: [
+  //       Container(
+  //         width: availableScreenWidth * .31,
+  //         decoration: BoxDecoration(
+  //           color: Colors.grey.shade200,
+  //           borderRadius: BorderRadius.circular(20),
+  //         ),
+  //         padding:
+  //             const EdgeInsets.all(8), // Reduced padding for image visibility
+  //         height: 150,
+  //         child: Stack(
+  //           children: [
+  //             // Display the uploaded image if available
+  //             if (imageUrl != null)
+  //               Positioned.fill(
+  //                 child: Image.network(
+  //                   imageUrl,
+  //                   fit: BoxFit.cover,
+  //                 ),
+  //               ),
+
+  //             Align(
+  //               alignment: Alignment.bottomRight,
+  //               child: IconButton(
+  //                 icon: Icon(Icons.add_circle),
+  //                 color: Theme.of(context).primaryColor,
+  //                 onPressed: () async {
+  //                   final pickedFile = await ImagePicker()
+  //                       .pickImage(source: ImageSource.gallery);
+  //                   if (pickedFile != null) {
+  //                     String uploadedImageUrl = await _uploadService
+  //                         .uploadToCloudinary(File(pickedFile.path));
+  //                     int? userId = await _tokenService.getStoredUserId();
+  //                     print("is $userImageId");
+  //                     await _uploadService.addOrUpdateUserImage(
+  //                         UserImage(
+  //                           id: userImageId,
+  //                           user: null,
+  //                           imagePath: uploadedImageUrl,
+  //                         ),
+  //                         userId);
+  //                     setState(() {
+  //                       imageUrls[index] = uploadedImageUrl;
+  //                     });
+  //                   }
+  //                 },
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
+  Column buildFileColumn(int index) {
+    if (index < 0 || index >= imageUrls.length) {
+      return Column(); // Return an empty column if index is out of bounds
+    }
+
+    //String imageUrl = imageUrls[index];
+    String? imageUrl = imageUrls[index];
+
+    int userImageId = userImages != null && index < userImages!.length
+        ? userImages![index].id ?? 0
+        : 0;
+
     return Column(
       children: [
         Container(
-            width: availableScreenWidth * .31,
-            decoration: BoxDecoration(
-                color: Colors.grey.shade200,
-                borderRadius: BorderRadius.circular(20)),
-            padding: const EdgeInsets.all(38),
-            height: 150,
-            child: Align(
-              alignment: Alignment.bottomRight,
-              child: IconButton(
-                icon: Icon(Icons.add_circle),
-                color: Theme.of(context).primaryColor,
-                onPressed: () async {},
+          width: availableScreenWidth * .31,
+          decoration: BoxDecoration(
+            color: Colors.grey.shade200,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          padding: const EdgeInsets.all(8),
+          height: 150,
+          child: Stack(
+            children: [
+              if (_loading)
+                Positioned.fill(
+                  child: CircleAvatar(
+                    backgroundImage: AssetImage('assets/images/loading.jpg'),
+                  ),
+                )
+              else
+                Positioned.fill(
+                  child: Image.network(
+                    imageUrl,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: IconButton(
+                  icon: Icon(Icons.add_circle),
+                  color: Theme.of(context).primaryColor,
+                  onPressed: () async {
+                    final pickedFile = await ImagePicker()
+                        .pickImage(source: ImageSource.gallery);
+                    if (pickedFile != null) {
+                      String uploadedImageUrl = await _uploadService
+                          .uploadToCloudinary(File(pickedFile.path));
+                      int? userId = await _tokenService.getStoredUserId();
+                      print("is $userImageId");
+                      await _uploadService.addOrUpdateUserImage(
+                        UserImage(
+                          id: userImageId,
+                          user: null,
+                          imagePath: uploadedImageUrl,
+                        ),
+                        userId,
+                      );
+                      initializeData();
+                      setState(() {
+                        if (index < imageUrls.length) {
+                          imageUrls[index] = uploadedImageUrl;
+                        }
+                      });
+                    }
+                  },
+                ),
               ),
-            )),
+            ],
+          ),
+        ),
       ],
     );
   }

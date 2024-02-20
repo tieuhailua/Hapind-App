@@ -3,7 +3,11 @@ import 'package:hapind/components/custom_surfix_icon.dart';
 import 'package:hapind/components/default_button.dart';
 import 'package:hapind/components/form_error.dart';
 import 'package:hapind/components/no_account_text.dart';
+import 'package:hapind/model/user_register.dart';
+import 'package:hapind/screens/otp/otp_screen.dart';
+import 'package:hapind/service/login_service.dart';
 import 'package:hapind/size_config.dart';
+import 'package:quickalert/quickalert.dart';
 
 import '../../../constants.dart';
 
@@ -48,6 +52,8 @@ class ForgotPassForm extends StatefulWidget {
 
 class _ForgotPassFormState extends State<ForgotPassForm> {
   final _formKey = GlobalKey<FormState>();
+  LoginService _loginService = LoginService();
+  TextEditingController emailController = TextEditingController();
   List<String> errors = [];
   String? email;
   @override
@@ -57,6 +63,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
       child: Column(
         children: [
           TextFormField(
+            controller: emailController,
             keyboardType: TextInputType.emailAddress,
             onSaved: (newValue) => email = newValue,
             onChanged: (value) {
@@ -98,13 +105,38 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
           FormError(errors: errors),
           SizedBox(height: SizeConfig.screenHeight * 0.1),
           DefaultButton(
-            text: "Continue",
-            press: () {
-              if (_formKey.currentState!.validate()) {
-                // Do what you want to do
-              }
-            },
-          ),
+              text: "Continue",
+              press: () async {
+                if (_formKey.currentState!.validate()) {
+                  String? errorMessage = await _loginService
+                      .checkAccountExits(emailController.text);
+                  if (errorMessage != null) {
+                    _formKey.currentState!.save();
+                    UserRegister user = UserRegister(
+                      email: emailController.text,
+                      phone: null,
+                      password: null,
+                    );
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => OtpScreen(user: user),
+                        ));
+                  } else {
+                    QuickAlert.show(
+                      context: context,
+                      type: QuickAlertType.error,
+                      text: "Invalid Email",
+                      confirmBtnText: 'OK',
+                      confirmBtnColor: Colors.redAccent,
+                      onConfirmBtnTap: () {
+                        Navigator.pop(context); // Dismiss the alert
+                      },
+                    );
+                  }
+                }
+                ;
+              }),
           SizedBox(height: SizeConfig.screenHeight * 0.1),
           NoAccountText(),
         ],

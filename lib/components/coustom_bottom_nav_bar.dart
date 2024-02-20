@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:hapind/screens/home/home_screen.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hapind/screens/chat/chats_screen.dart';
-import 'package:hapind/screens/like/like.dart';
+import 'package:hapind/screens/home/home_screen.dart';
+import 'package:hapind/screens/like/Like.dart';
 import 'package:hapind/screens/profile/profile_screen.dart';
 import 'package:hapind/screens/search/search_screen.dart';
+import 'package:hapind/screens/searchlove/searchlove.dart';
+import 'package:hapind/service/auth/auth_gate.dart';
 
 import '../constants.dart';
 import '../enums.dart';
@@ -16,7 +18,7 @@ class CustomBottomNavBar extends StatelessWidget {
   }) : super(key: key);
 
   final MenuState selectedMenu;
-
+  
   @override
   Widget build(BuildContext context) {
     final Color inActiveIconColor = Color.fromARGB(255, 10, 9, 9);
@@ -41,8 +43,7 @@ class CustomBottomNavBar extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              IconButton(
-                
+              IconButton(         
                  icon: Icon(Icons.home,
                   color: MenuState.home == selectedMenu
                        ? kPrimaryColor
@@ -52,10 +53,10 @@ class CustomBottomNavBar extends StatelessWidget {
               ),
               IconButton(
                 // icon: SvgPicture.asset("assets/icons/Heart Icon.svg"),
-                icon: Icon(Icons.search,color:Colors.orange),
-                onPressed: () =>Navigator.pushNamed(context,SearchScreen.routeName),
+                icon: Icon(Icons.search),
+                onPressed: () => Navigator.pushNamed(context, SearchScreen.routeName),
               ),
-              IconButton(
+               IconButton(
                 icon: SvgPicture.asset(
                   "assets/icons/likes_active_icon.svg",
                   height: 32, // Đặt chiều cao mong muốn
@@ -64,10 +65,12 @@ class CustomBottomNavBar extends StatelessWidget {
                 ),
                 onPressed: () =>
                     Navigator.pushNamed(context, LikesPage.routeName),
+                    //Navigator.pushNamed(context,ChatsScreen.routeName),
               ),
               IconButton(
-                icon: Icon(Icons.message, color: Color.fromARGB(255, 201, 141, 226)),
+                icon: Icon(Icons.message),
                 onPressed: () =>Navigator.pushNamed(context,ChatsScreen.routeName),
+                //onPressed: () =>Navigator.pushNamed(context,AuthGate.routeName),
               ),
               IconButton(
                 // icon: SvgPicture.asset(

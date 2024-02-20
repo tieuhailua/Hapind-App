@@ -16,8 +16,11 @@ class __SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-         automaticallyImplyLeading: false, 
-        title:Image.asset('assets/icons/logo1.png', width: 200,),
+        automaticallyImplyLeading: false,
+        title: Image.asset(
+          'assets/icons/logo1.png',
+          width: 200,
+        ),
       ),
       body: Center(
         child: CustomScrollView(
@@ -123,7 +126,8 @@ class __SearchScreenState extends State<SearchScreen> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                              SearchLoveScreen()));
+                                                SearchLoveScreen(
+                                                    filter: "Friendship")));
                                   },
                                 ),
                               ),
@@ -131,7 +135,7 @@ class __SearchScreenState extends State<SearchScreen> {
                                 margin:
                                     const EdgeInsets.only(top: 220, left: 10),
                                 child: const Text(
-                                  "Find Your Perfect Match",
+                                  "Find Friendship",
                                   style: TextStyle(
                                     color: Color(0xFFFFFFFF),
                                     fontSize: 18,
@@ -169,21 +173,22 @@ class __SearchScreenState extends State<SearchScreen> {
                             child: Stack(
                               children: [
                                 Container(
-                                   child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                               SearchLoveScreen()));
-                                  },
-                                ),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SearchLoveScreen(
+                                                      filter: "Dating")));
+                                    },
+                                  ),
                                 ),
                                 Container(
                                   margin:
                                       const EdgeInsets.only(top: 220, left: 10),
                                   child: const Text(
-                                    "Find Your Perfect Match",
+                                    "Find Dating",
                                     style: TextStyle(
                                       color: Color(0xFFFFFFFF),
                                       fontSize: 18,
@@ -234,7 +239,8 @@ class __SearchScreenState extends State<SearchScreen> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                SearchLoveScreen()));
+                                                SearchLoveScreen(
+                                                    filter: "Sport")));
                                   },
                                 ),
                               ),
@@ -242,7 +248,7 @@ class __SearchScreenState extends State<SearchScreen> {
                                 margin:
                                     const EdgeInsets.only(top: 220, left: 10),
                                 child: const Text(
-                                  "Find Your Perfect Match",
+                                  "Find by Sport",
                                   style: TextStyle(
                                     color: Color(0xFFFFFFFF),
                                     fontSize: 18,
@@ -281,20 +287,21 @@ class __SearchScreenState extends State<SearchScreen> {
                               children: [
                                 Container(
                                   child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                              SearchLoveScreen()));
-                                  },
-                                ),
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SearchLoveScreen(
+                                                      filter: "Music")));
+                                    },
+                                  ),
                                 ),
                                 Container(
                                   margin:
                                       const EdgeInsets.only(top: 220, left: 10),
                                   child: const Text(
-                                    "Find Your Perfect Match",
+                                    "Find Music",
                                     style: TextStyle(
                                       color: Color(0xFFFFFFFF),
                                       fontSize: 18,
@@ -345,7 +352,8 @@ class __SearchScreenState extends State<SearchScreen> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                SearchLoveScreen()));
+                                                SearchLoveScreen(
+                                                    filter: "Pet")));
                                   },
                                 ),
                               ),
@@ -353,7 +361,7 @@ class __SearchScreenState extends State<SearchScreen> {
                                 margin:
                                     const EdgeInsets.only(top: 220, left: 10),
                                 child: const Text(
-                                  "Find Your Perfect Match",
+                                  "Find by Pet",
                                   style: TextStyle(
                                     color: Color(0xFFFFFFFF),
                                     fontSize: 18,
@@ -392,20 +400,21 @@ class __SearchScreenState extends State<SearchScreen> {
                               children: [
                                 Container(
                                   child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                SearchLoveScreen()));
-                                  },
-                                ),
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SearchLoveScreen(
+                                                      filter: "Online")));
+                                    },
+                                  ),
                                 ),
                                 Container(
                                   margin:
                                       const EdgeInsets.only(top: 220, left: 10),
                                   child: const Text(
-                                    "Find Your Perfect Match",
+                                    "Find by Online",
                                     style: TextStyle(
                                       color: Color(0xFFFFFFFF),
                                       fontSize: 18,

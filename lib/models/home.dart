@@ -1,10 +1,10 @@
 class TinderCard {
   final String name;
-  final List<String> photos;
+  final List<String?> photos;
   final int age;
   final int km;
   final String? aboutMe;
-  final List<String>? interests;
+  final List<String>? interests; //like what
   final String text;
 
   TinderCard({

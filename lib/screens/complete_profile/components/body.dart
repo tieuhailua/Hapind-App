@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hapind/constants.dart';
+import 'package:hapind/model/user_register.dart';
 import 'package:hapind/size_config.dart';
 
 import 'complete_profile_form.dart';
 
 class Body extends StatelessWidget {
+  final UserRegister user;
+  Body({required this.user});
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -23,7 +27,7 @@ class Body extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: SizeConfig.screenHeight * 0.06),
-                CompleteProfileForm(),
+                CompleteProfileForm(user: user),
                 SizedBox(height: getProportionateScreenHeight(30)),
                 Text(
                   "By continuing your confirm that you agree \nwith our Term and Condition",

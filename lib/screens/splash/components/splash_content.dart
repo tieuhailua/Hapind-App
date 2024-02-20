@@ -28,7 +28,7 @@ class SplashContent extends StatelessWidget {
           text!,
           textAlign: TextAlign.center,
         ),
-        // Spacer(flex: 2),
+        Spacer(flex: 2),
         Image.asset(
           image!,
           height: getProportionateScreenHeight(480),
