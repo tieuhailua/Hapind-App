@@ -63,7 +63,7 @@ class _SliederState extends State<SliderHome> {
   Future getData() async {
     int? id = await _tokenService.getStoredUserId();
     User? user =
-        await _matchingService.getUserForMatching(id, 16, 80, 20) ?? null;
+        await _matchingService.getUserForMatching(id, await _tokenService.getStoredMinAge()??0,await _tokenService.getStoredMaxAge()??0,await _tokenService.getStoredDistance()??0) ?? null;
     //List data = jsonDecode(response.body)['results'];
     setState(() {
       usersData = user;
@@ -340,6 +340,7 @@ class _SliederState extends State<SliderHome> {
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     DetailsPage(
+                                                      id:usersData?.id??0,
                                                   name: usersData?.fullname ??
                                                       "Default Name",
                                                   age: (currentDate.year -
@@ -362,6 +363,21 @@ class _SliederState extends State<SliderHome> {
                                                   avatar: usersData?.userImages
                                                           ?.first.imagePath ??
                                                       "",
+                                                  DOB: usersData?.dob.toString() ??"",
+                                                  purpose: usersData?.purpose?.name ??"",
+                                                  description: usersData?.description??"",
+                                                  weight: usersData?.weight.toString() ??"",
+                                                  height: usersData?.height.toString() ??"",
+                                                  drinking: usersData?.drinking?.name ??"",
+                                                  family: usersData?.family?.name ??"",
+                                                  habit: usersData?.habit?.name ??"",
+                                                  literacy: usersData?.literacy?.name ??"",
+                                                  smoking: usersData?.smoking?.name ??"",
+                                                  work: usersData?.work?.name ??"",
+                                                  sport: usersData?.userExercises ,
+                                                  music: usersData?.userMusics,
+                                                  pet: usersData?.userPets,
+                                                  singer: usersData?.userSingers,
                                                 ),
                                               ),
                                             );

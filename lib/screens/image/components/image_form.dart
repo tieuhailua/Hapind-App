@@ -33,6 +33,7 @@ class _CompleteImageFormState extends State<CompleteImageForm> {
   final _formKey = GlobalKey<FormState>();
   final List<String?> errors = [];
   String? image;
+  List<String> evidens = [];
   List<UserImage>? userImages;
   TokenService _tokenService = TokenService();
   UploadService _uploadService = UploadService();
@@ -209,10 +210,17 @@ class _CompleteImageFormState extends State<CompleteImageForm> {
           height: 150,
           child: Stack(
             children: [
-              if (imageUrl != null)
+              if (imageUrl != null && imageUrl.isNotEmpty)
                 Positioned.fill(
                   child: Image.network(
                     imageUrl,
+                    fit: BoxFit.cover,
+                  ),
+                )
+              else
+                Positioned.fill(
+                  child: Image.network(
+                    "https://res.cloudinary.com/dmkw4f8iw/image/upload/v1708590938/Screenshot_2024-02-22_153511_zm3nse.png",
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -227,21 +235,49 @@ class _CompleteImageFormState extends State<CompleteImageForm> {
                     if (pickedFile != null) {
                       String uploadedImageUrl = await _uploadService
                           .uploadToCloudinary(File(pickedFile.path));
-                      int? userId = await _tokenService.getStoredUserId();
-                      print("is $userImageId");
+                      // int? userId = await _tokenService.getStoredUserId();
+
+                      // print("is $userImageId");
+                      // await _uploadService.addOrUpdateUserImage(
+                      //   UserImage(
+                      //     id: userImageId,
+                      //     user: null,
+                      //     imagePath: uploadedImageUrl,
+                      //   ),
+                      //   user?.id,
+                      // );
+                      // setState(() {
+                      //   if (index < imageUrls.length) {
+                      //     imageUrls[index] = uploadedImageUrl;
+                      //   }
+                      // });
+                      // setState(() async {
+                      //   if (index < imageUrls.length) {
+                      //      imageUrls[index] = uploadedImageUrl;
+                      //     if (!evidens.contains(uploadedImageUrl)) {
+                      //       evidens.add(uploadedImageUrl);
+                      //     }
+                      //   }
+                      // });
+                      setState(() {
+                        // Find the first empty slot in the imageUrls list
+                        int emptyIndex =
+                            imageUrls.indexWhere((url) => url.isEmpty);
+                        if (emptyIndex != -1) {
+                          imageUrls[emptyIndex] = uploadedImageUrl;
+                          if (!evidens.contains(uploadedImageUrl)) {
+                            evidens.add(uploadedImageUrl);
+                          }
+                        }
+                      });
                       await _uploadService.addOrUpdateUserImage(
                         UserImage(
-                          id: userImageId,
+                          id: 0, // Assuming 0 for a new UserImage
                           user: null,
                           imagePath: uploadedImageUrl,
                         ),
                         user?.id,
                       );
-                      setState(() {
-                        if (index < imageUrls.length) {
-                          imageUrls[index] = uploadedImageUrl;
-                        }
-                      });
                     }
                   },
                 ),

@@ -19,11 +19,14 @@ class AuthService extends ChangeNotifier {
         'uid': userCredential.user!.uid,
         "email": email,
       });
+     
       print(userCredential);
       return userCredential;
+
     }
     //catch error
     on FirebaseAuthException catch (e) {
+      
       throw Exception(e.code);
     }
   }

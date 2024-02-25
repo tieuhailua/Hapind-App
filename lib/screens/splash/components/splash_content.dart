@@ -19,7 +19,7 @@ class SplashContent extends StatelessWidget {
         Text(
           "HAPIND",
           style: TextStyle(
-            fontSize: getProportionateScreenWidth(36),
+            fontSize: getProportionateScreenWidth(30),
             color: kPrimaryColor,
             fontWeight: FontWeight.bold,
           ),
@@ -31,7 +31,7 @@ class SplashContent extends StatelessWidget {
         Spacer(flex: 2),
         Image.asset(
           image!,
-          height: getProportionateScreenHeight(480),
+          height: getProportionateScreenHeight(450),
           width: getProportionateScreenWidth(400),
         ),
       ],

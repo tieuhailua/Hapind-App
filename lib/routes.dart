@@ -2,6 +2,8 @@ import 'package:flutter/widgets.dart';
 import 'package:hapind/model/user.dart';
 import 'package:hapind/model/user_register.dart';
 import 'package:hapind/screens/accounts/Edit_account.dart';
+import 'package:hapind/screens/blog/blog_instructions.dart';
+import 'package:hapind/screens/blog_success/block_success_screen.dart';
 import 'package:hapind/screens/cart/cart_screen.dart';
 import 'package:hapind/screens/change_password/change_password_screen.dart';
 import 'package:hapind/screens/change_password_success/change_password_success_screen.dart';
@@ -28,6 +30,8 @@ import 'package:hapind/screens/otp/otp_screen.dart';
 import 'package:hapind/screens/profile/profile_screen.dart';
 import 'package:hapind/screens/purpose/purpose_screen.dart';
 import 'package:hapind/screens/register_success/register_success_screen.dart';
+import 'package:hapind/screens/report_list/report_instructions.dart';
+import 'package:hapind/screens/report_success/report_success_screen.dart';
 import 'package:hapind/screens/reset_password_success/reset_password_success_screen.dart';
 import 'package:hapind/screens/search/search_screen.dart';
 import 'package:hapind/screens/searchlove/searchlove.dart';
@@ -112,6 +116,7 @@ final Map<String, WidgetBuilder> routes = {
   //CompleteStatusScreen.routeName:(context) => CompleteStatusScreen(),
   //CompleteSmokingScreen.routeName:(context) => CompleteSmokingScreen(),
   HomeScreen.routeName: (context) => HomeScreen(),
+  MapsDemo.routeName: (context) => MapsDemo(),
   DetailsScreen.routeName: (context) => DetailsScreen(),
   CartScreen.routeName: (context) => CartScreen(),
   ProfileScreen.routeName: (context) => ProfileScreen(),
@@ -134,7 +139,12 @@ final Map<String, WidgetBuilder> routes = {
     final User user = ModalRoute.of(context)!.settings.arguments as User;
     return MessagesScreen(user: user);
   },
+  BlockSuccessScreen.routeName: (context) => BlockSuccessScreen(),
+  ReportSuccessScreen.routeName: (context) => ReportSuccessScreen(),
+
   TermsInstrucstions.routeName: (context) => TermsInstrucstions(),
+  ReportInstrucstions.routeName: (context) => ReportInstrucstions(),
+  BlogInstrucstions.routeName: (context) => BlogInstrucstions(),
   ChangePasswordScreen.routeName: (context) => ChangePasswordScreen(),
   ChangePasswordSuccessScreen.routeName: (context) =>
       ChangePasswordSuccessScreen(),

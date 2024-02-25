@@ -12,6 +12,7 @@ import 'package:hapind/model/expecting.dart';
 import 'package:hapind/model/literacy.dart';
 import 'package:hapind/model/music.dart';
 import 'package:hapind/model/purpose.dart';
+import 'package:hapind/model/reason.dart';
 import 'package:hapind/model/singer.dart';
 import 'package:hapind/model/smoking.dart';
 import 'package:hapind/model/user_exercise.dart';
@@ -29,6 +30,7 @@ class ChoiceService extends BaseApi {
   late String getPurposeChoiceUrl = url + "/api/mobile/getPurposeChoice";
   late String getChoiceUrl = url + "/api/mobile/getChoice/";
   late String getMultiChoiceUrl = url + "/api/mobile/getMultiChoice/";
+  late String getReasonUrl = url + "/api/mobile/getReason";
 
   Future<List<Purpose>> getPurposeChoice() async {
     try {
@@ -44,6 +46,30 @@ class ChoiceService extends BaseApi {
         final List<dynamic> jsonList = jsonDecode(response.body);
         final List<Purpose> purposes = jsonList
             .map((json) => Purpose.fromJson(json as Map<String, dynamic>))
+            .toList();
+        return purposes;
+      } else {
+        return [];
+      }
+    } catch (error) {
+      return [];
+    }
+  }
+
+  Future<List<Reason>> getReasonChoice() async {
+    try {
+      final response = await http.get(
+        Uri.parse('$getReasonUrl'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        print(response.body);
+        final List<dynamic> jsonList = jsonDecode(response.body);
+        final List<Reason> purposes = jsonList
+            .map((json) => Reason.fromJson(json as Map<String, dynamic>))
             .toList();
         return purposes;
       } else {

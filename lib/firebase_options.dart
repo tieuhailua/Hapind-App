@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -25,7 +28,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,38 +49,20 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyD3Uwi_93-flMvhM_3Qz-boPaS2A2m5fXg',
-    appId: '1:155876045339:web:3a5016ab9292681f4ebebe',
-    messagingSenderId: '155876045339',
-    projectId: 'chatmessenger-a9328',
-    authDomain: 'chatmessenger-a9328.firebaseapp.com',
-    storageBucket: 'chatmessenger-a9328.appspot.com',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAdGqHhujiThqX8I0otT_h3qfqpbrileHk',
-    appId: '1:155876045339:android:ea8afb8812e5727e4ebebe',
-    messagingSenderId: '155876045339',
-    projectId: 'chatmessenger-a9328',
-    storageBucket: 'chatmessenger-a9328.appspot.com',
+    apiKey: 'AIzaSyDDSR8SFL2ydj2in7Gb9bvT0OJ1k6njG5M',
+    appId: '1:895490486439:android:c6913043b8d4064dbc2b82',
+    messagingSenderId: '895490486439',
+    projectId: 'hapind-app',
+    storageBucket: 'hapind-app.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyC8Hvdl8nFMPPhAyHs8zkB3yZLLrCpD9aQ',
-    appId: '1:155876045339:ios:f24aae19a64a305b4ebebe',
-    messagingSenderId: '155876045339',
-    projectId: 'chatmessenger-a9328',
-    storageBucket: 'chatmessenger-a9328.appspot.com',
+    apiKey: 'AIzaSyD2uakR7E6_kgcUUPJ2NBMj374gpt9RTPQ',
+    appId: '1:895490486439:ios:c44e06b819d6e852bc2b82',
+    messagingSenderId: '895490486439',
+    projectId: 'hapind-app',
+    storageBucket: 'hapind-app.appspot.com',
     iosBundleId: 'com.example.shopApp',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyC8Hvdl8nFMPPhAyHs8zkB3yZLLrCpD9aQ',
-    appId: '1:155876045339:ios:6ca2ed0d1299e2814ebebe',
-    messagingSenderId: '155876045339',
-    projectId: 'chatmessenger-a9328',
-    storageBucket: 'chatmessenger-a9328.appspot.com',
-    iosBundleId: 'com.example.group01.RunnerTests',
   );
 }

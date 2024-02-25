@@ -56,7 +56,12 @@ class _MainPageState extends State<MainPage> {
   Future getData() async {
     int? id = await _tokenService.getStoredUserId();
     if (filter == "Dating" || filter == "Friendship") {
-      User? user = await _matchingService.getUserForMatchingByPurpose(id, 16, 80, 100,filter);
+      User? user = await _matchingService.getUserForMatchingByPurpose(
+          id,
+          await _tokenService.getStoredMinAge() ?? 20,
+          await _tokenService.getStoredMaxAge() ?? 80,
+          await _tokenService.getStoredDistance() ?? 100,
+          filter);
       setState(() {
         usersData = user;
         items =
@@ -64,7 +69,10 @@ class _MainPageState extends State<MainPage> {
       });
     }
     if (filter == "Pet") {
-      User? user = await _matchingService.getUserForMatchingByPet(id, 16, 80, 100);
+      User? user =
+          await _matchingService.getUserForMatchingByPet(id, await _tokenService.getStoredMinAge() ?? 20,
+          await _tokenService.getStoredMaxAge() ?? 80,
+          await _tokenService.getStoredDistance() ?? 100);
       setState(() {
         usersData = user;
         items =
@@ -72,7 +80,10 @@ class _MainPageState extends State<MainPage> {
       });
     }
     if (filter == "Sport") {
-      User? user = await _matchingService.getUserForMatchingByExercise(id, 16, 80, 100);
+      User? user =
+          await _matchingService.getUserForMatchingByExercise(id, await _tokenService.getStoredMinAge() ?? 20,
+          await _tokenService.getStoredMaxAge() ?? 80,
+          await _tokenService.getStoredDistance() ?? 100);
       setState(() {
         usersData = user;
         items =
@@ -80,7 +91,10 @@ class _MainPageState extends State<MainPage> {
       });
     }
     if (filter == "Music") {
-      User? user = await _matchingService.getUserForMatchingByMusic(id, 16, 80, 100);
+      User? user =
+          await _matchingService.getUserForMatchingByMusic(id, await _tokenService.getStoredMinAge() ?? 20,
+          await _tokenService.getStoredMaxAge() ?? 80,
+          await _tokenService.getStoredDistance() ?? 100);
       setState(() {
         usersData = user;
         items =
@@ -88,7 +102,10 @@ class _MainPageState extends State<MainPage> {
       });
     }
     if (filter == "Online") {
-      User? user = await _matchingService.getUserForMatchingByOnline(id, 16, 80, 100);
+      User? user =
+          await _matchingService.getUserForMatchingByOnline(id, await _tokenService.getStoredMinAge() ?? 20,
+          await _tokenService.getStoredMaxAge() ?? 80,
+          await _tokenService.getStoredDistance() ?? 100);
       setState(() {
         usersData = user;
         items =
@@ -156,6 +173,7 @@ class _MainPageState extends State<MainPage> {
             } else if (region == SlideRegion.inSuperLikeRegion) {
               setState(() {
                 isSuperLike = true;
+                status = -3;
               });
             } else {
               setState(() {
@@ -420,6 +438,9 @@ class _MainPageState extends State<MainPage> {
                                                               builder:
                                                                   (context) =>
                                                                       DetailsPage(
+                                                                id: usersData
+                                                                        ?.id ??
+                                                                    0,
                                                                 name: usersData
                                                                         ?.fullname ??
                                                                     "Default Name",
@@ -438,12 +459,15 @@ class _MainPageState extends State<MainPage> {
                                                                 city: usersData
                                                                         ?.address ??
                                                                     "Default address",
-                                                                state: usersData
-                                                                        ?.address ??
-                                                                    "Default address",
-                                                                country: usersData
-                                                                        ?.address ??
-                                                                    "Default address",
+                                                                state:
+                                                                    //  usersData
+                                                                    //         ?.address ??
+                                                                    //     "Default address",
+                                                                    "",
+                                                                country: "",
+                                                                //  usersData
+                                                                //         ?.address ??
+                                                                //     "Default address",
                                                                 phone: usersData
                                                                         ?.phone ??
                                                                     "Default phone",
@@ -455,6 +479,58 @@ class _MainPageState extends State<MainPage> {
                                                                         ?.first
                                                                         .imagePath ??
                                                                     "",
+                                                                DOB: usersData
+                                                                        ?.dob
+                                                                        .toString() ??
+                                                                    "",
+                                                                purpose: usersData
+                                                                        ?.purpose
+                                                                        ?.name ??
+                                                                    "",
+                                                                description:
+                                                                    usersData
+                                                                            ?.description ??
+                                                                        "",
+                                                                weight: usersData
+                                                                        ?.weight
+                                                                        .toString() ??
+                                                                    "",
+                                                                height: usersData
+                                                                        ?.height
+                                                                        .toString() ??
+                                                                    "",
+                                                                drinking: usersData
+                                                                        ?.drinking
+                                                                        ?.name ??
+                                                                    "",
+                                                                family: usersData
+                                                                        ?.family
+                                                                        ?.name ??
+                                                                    "",
+                                                                habit: usersData
+                                                                        ?.habit
+                                                                        ?.name ??
+                                                                    "",
+                                                                literacy: usersData
+                                                                        ?.literacy
+                                                                        ?.name ??
+                                                                    "",
+                                                                smoking: usersData
+                                                                        ?.smoking
+                                                                        ?.name ??
+                                                                    "",
+                                                                work: usersData
+                                                                        ?.work
+                                                                        ?.name ??
+                                                                    "",
+                                                                sport: usersData
+                                                                    ?.userExercises,
+                                                                music: usersData
+                                                                    ?.userMusics,
+                                                                pet: usersData
+                                                                    ?.userPets,
+                                                                singer: usersData
+                                                                    ?.userSingers,
                                                               ),
                                                             ),
                                                           );
@@ -611,14 +687,14 @@ class _MainPageState extends State<MainPage> {
                             itemChanged: (SwipeItem item, int index) async {
                               await getData();
                               Navigator.pushReplacement(
-                                  context,
-                                  PageRouteBuilder(
-                                    pageBuilder: (context, animation,
-                                            secondaryAnimation) =>
-                                        SearchLoveScreen(filter:filter),
-                                    transitionDuration: Duration.zero,
-                                  ),
-                                );
+                                context,
+                                PageRouteBuilder(
+                                  pageBuilder: (context, animation,
+                                          secondaryAnimation) =>
+                                      SearchLoveScreen(filter: filter),
+                                  transitionDuration: Duration.zero,
+                                ),
+                              );
                               int? id = await _tokenService.getStoredUserId();
                               _userService.matching(
                                   id, item.content.text, status);
@@ -754,7 +830,7 @@ class _MainPageState extends State<MainPage> {
                                           color: isNope ? Colors.white : null,
                                         ),
                                         onPressed: () {
-status = -2;
+                                          status = -2;
                                           matchEngine.currentItem?.nope();
                                         },
                                       ),
@@ -791,8 +867,8 @@ status = -2;
                                         border: Border.all(
                                           color: const Color(0xFF6EE6BA),
                                         ),
-                                        color: isNope
-                                            ? const Color(0xFF6EE6BA)
+                                        color: isLike
+                                            ? Color.fromARGB(255, 201, 239, 225)
                                             : Colors.transparent,
                                       ),
                                       padding: const EdgeInsets.all(1),
@@ -803,7 +879,7 @@ status = -2;
                                           color: isNope ? Colors.white : null,
                                         ),
                                         onPressed: () {
-status = -3;
+                                          status = -3;
                                           matchEngine.currentItem?.like();
                                         },
                                       ),

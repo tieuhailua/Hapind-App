@@ -1,13 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:hapind/model/block.dart';
+import 'package:hapind/model/user_exercise.dart';
+import 'package:hapind/model/user_music.dart';
+import 'package:hapind/model/user_pet.dart';
+import 'package:hapind/model/user_singer.dart';
+import 'package:hapind/screens/blog_success/block_success_screen.dart';
 import 'dart:ui';
 
 import 'package:hapind/screens/chat/chats_screen.dart';
+import 'package:hapind/screens/report/report_form_screen.dart';
+import 'package:hapind/screens/report_list/components/block_menu.dart';
+import 'package:hapind/service/token_service.dart';
+import 'package:hapind/service/user_service.dart';
 
 class DetailsPage extends StatefulWidget {
-  final String name, gender, city, state, country, email, age, phone,avatar;
+  final String name,
+      gender,
+      city,
+      state,
+      country,
+      email,
+      age,
+      phone,
+      avatar,
+      DOB,
+      purpose,
+      description,
+      weight,
+      height,
+      drinking,
+      family,
+      habit,
+      literacy,
+      smoking,
+      work;
+  final int id;
+  final Set<UserExercise>? sport;
+  final Set<UserMusic>? music;
+  final Set<UserPet>? pet;
+  final Set<UserSinger>? singer;
 
   const DetailsPage({
     Key? key,
+    required this.id,
     required this.name,
     required this.age,
     required this.gender,
@@ -17,6 +52,21 @@ class DetailsPage extends StatefulWidget {
     required this.phone,
     required this.email,
     required this.avatar,
+    required this.DOB,
+    required this.purpose,
+    required this.description,
+    required this.weight,
+    required this.height,
+    required this.drinking,
+    required this.family,
+    required this.habit,
+    required this.literacy,
+    required this.smoking,
+    required this.work,
+    required this.sport,
+    required this.music,
+    required this.pet,
+    required this.singer,
   }) : super(key: key);
 
   @override
@@ -24,6 +74,65 @@ class DetailsPage extends StatefulWidget {
 }
 
 class _DetailsPageState extends State<DetailsPage> {
+  List<String>? love = [];
+  TokenService _tokenService = TokenService();
+  UserService _userService = UserService();
+  @override
+  void initState() {
+    super.initState();
+    if (widget.sport != null) {
+      widget.sport?.forEach((exercise) {
+        // Check your condition for sport, e.g., exercise.isActive or any other property
+        if (exercise.choose == true) {
+          love?.add('Sport');
+        }
+      });
+    }
+    if (widget.music != null) {
+      widget.music?.forEach((exercise) {
+        // Check your condition for sport, e.g., exercise.isActive or any other property
+        if (exercise.choose == true) {
+          love?.add('Music');
+        }
+      });
+    }
+    if (widget.pet != null) {
+      widget.pet?.forEach((exercise) {
+        // Check your condition for sport, e.g., exercise.isActive or any other property
+        if (exercise.choose == true) {
+          love?.add('Pet');
+        }
+      });
+    }
+    if (widget.singer != null) {
+      widget.singer?.forEach((exercise) {
+        // Check your condition for sport, e.g., exercise.isActive or any other property
+        if (exercise.choose == true) {
+          love?.add('Singer');
+        }
+      });
+    }
+    // if (widget.sport == true) {
+    //   love.add('sport');
+    // }
+    // if (widget.music == true) {
+    //   love.add('music');
+    // }
+    //   if (widget.music == true) {
+    //   love.add('music');
+    // } else if (widget.music != null &&
+    //     widget.music.any((music) => music['choose'] == true)) {
+    //   love.add('music');
+    // }
+    // if (widget.pet == true) {
+    //   love.add('pet');
+    // }
+    // if (widget.singer == true) {
+    //   love.add('singer');
+    // }
+    print(love);
+  }
+
   @override
   Widget build(BuildContext context) {
     String _avatarUrl =
@@ -371,11 +480,9 @@ class _DetailsPageState extends State<DetailsPage> {
         Container(
           width: double.infinity,
           height: 600,
-          decoration:  BoxDecoration(
+          decoration: BoxDecoration(
             image: DecorationImage(
-                image: NetworkImage(
-                    widget.avatar),
-                fit: BoxFit.cover),
+                image: NetworkImage(widget.avatar), fit: BoxFit.cover),
           ),
         ),
         Positioned(
@@ -405,13 +512,66 @@ class _DetailsPageState extends State<DetailsPage> {
               Row(
                 children: [
                   IconButton(
-                      icon: const Icon(Icons.favorite_border,
+                      icon: const Icon(Icons.block,
                           color: Color.fromARGB(255, 205, 17, 17)),
-                      onPressed: () {}),
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text("Confirm"),
+                              content:
+                                  Text("Are you sure to block ${widget.name}?"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () async {
+                                    int? id =
+                                        await _tokenService.getStoredUserId();
+                                    print(id);
+                                    print(widget.id);
+                                    //_userService.block(id, widget.id, -5);
+                                    Navigator.of(context).pop();
+                                   // List<Block>? blocks =
+                                     await _userService.block(id, widget.id, -5);
+                                     Navigator.pushNamed(context, BlockSuccessScreen.routeName);
+                                    // Navigator.pushReplacement(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) =>
+                                    //             BlockMenu(blocks: blocks!)));
+                                    // ScaffoldMessenger.of(context).showSnackBar(
+                                    //   SnackBar(
+                                    //     content: Text(
+                                    //       ("You have been block " +
+                                    //           widget.name),
+                                    //     ),
+                                    //   ),
+                                    // );
+                                  },
+                                  child: Text("Agree"),
+                                ),
+                                // Nút "Không đồng ý"
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text("Disagree"),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }),
                   IconButton(
-                      icon: const Icon(Icons.share,
+                      icon: const Icon(Icons.report,
                           color: Color.fromARGB(255, 195, 11, 11)),
-                      onPressed: () {}),
+                      onPressed: () {
+                        Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ReportFormScreen(reported: widget.id),
+                        ));
+                      }),
                 ],
               ),
             ],
@@ -465,7 +625,7 @@ class _DetailsPageState extends State<DetailsPage> {
           Container(
             margin: const EdgeInsets.all(0.0),
             child: Text(
-              widget.name + ", " + widget.age,
+              widget.name + ", " + widget.age + " ",
               style: const TextStyle(
                 color: Colors.black87,
                 fontSize: 24.0,
@@ -517,17 +677,46 @@ class _DetailsPageState extends State<DetailsPage> {
               ],
             ),
           ),
-          const SizedBox(height: 16),
+          //const SizedBox(height: 16),
+          // Row(
+          //   children: [
+          //     Icon(Icons.heart_broken, color: Color.fromARGB(255, 10, 10, 10)),
+          //     Padding(
+          //       padding: EdgeInsets.only(left: 10),
+          //       child: Column(
+          //         crossAxisAlignment: CrossAxisAlignment.start,
+          //         children: [
+          //           Text(
+          //             "DOB",
+          //             style: TextStyle(
+          //               fontSize: 16,
+          //               color: Color.fromARGB(255, 9, 9, 9),
+          //               fontFamily: "medium",
+          //             ),
+          //           ),
+          //           Text(
+          //             widget.DOB,
+          //             style: TextStyle(
+          //               fontSize: 14,
+          //               color: Colors.grey,
+          //               fontFamily: "medium",
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //   ],
+          // ),
           Row(
-            children: const [
-              Icon(Icons.place, color: Color.fromARGB(255, 10, 10, 10)),
+            children: [
+              Icon(Icons.heart_broken, color: Color.fromARGB(255, 10, 10, 10)),
               Padding(
                 padding: EdgeInsets.only(left: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Place",
+                      "Looking",
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 9, 9),
@@ -535,9 +724,9 @@ class _DetailsPageState extends State<DetailsPage> {
                       ),
                     ),
                     Text(
-                      "1 Km",
+                      widget.purpose,
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 14,
                         color: Colors.grey,
                         fontFamily: "medium",
                       ),
@@ -547,69 +736,301 @@ class _DetailsPageState extends State<DetailsPage> {
               ),
             ],
           ),
-          Row(
-            children: const [
-              Icon(Icons.school, color: Color.fromARGB(255, 10, 10, 10)),
-              Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "School",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color.fromARGB(255, 9, 9, 9),
-                        fontFamily: "medium",
+          if (widget.height != "null")
+            Row(
+              children: [
+                Icon(Icons.height, color: Color.fromARGB(255, 10, 10, 10)),
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Height",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color.fromARGB(255, 9, 9, 9),
+                          fontFamily: "medium",
+                        ),
                       ),
-                    ),
-                    Text(
-                      "Developer",
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                        fontFamily: "medium",
+                      Text(
+                        widget.height + " cm",
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey,
+                          fontFamily: "medium",
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: const [
-              Icon(Icons.category_outlined,
-                  color: Color.fromARGB(255, 5, 5, 5)),
-              Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: Text(
-                  "Music, Traveling, Netflix",
-                  style: TextStyle(
-                      fontSize: 16, color: Colors.grey, fontFamily: "medium"),
-                ),
-              )
-            ],
-          ),
-          const SizedBox(height: 16),
-          InkWell(
-            onTap: () {
-              // Xử lý khi InkWell được nhấn
-            },
-            child: Row(
-              children: const [
-                Icon(Icons.format_quote,
-                    color: Color.fromARGB(255, 10, 10, 10)),
-                SizedBox(width: 10),
-                Text(
-                  'About',
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                    ],
+                  ),
                 ),
               ],
             ),
-          ),
+          if (widget.weight != "null")
+            Row(
+              children: [
+                Icon(Icons.line_weight, color: Color.fromARGB(255, 10, 10, 10)),
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Weight",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color.fromARGB(255, 9, 9, 9),
+                          fontFamily: "medium",
+                        ),
+                      ),
+                      Text(
+                        widget.weight + " Kg",
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey,
+                          fontFamily: "medium",
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          if (widget.literacy != "")
+            Row(
+              children: [
+                Icon(Icons.school, color: Color.fromARGB(255, 10, 10, 10)),
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Literacy",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color.fromARGB(255, 9, 9, 9),
+                          fontFamily: "medium",
+                        ),
+                      ),
+                      Text(
+                        widget.literacy,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey,
+                          fontFamily: "medium",
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          if (widget.work != "")
+            Row(
+              children: [
+                Icon(Icons.work, color: Color.fromARGB(255, 10, 10, 10)),
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Work",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color.fromARGB(255, 9, 9, 9),
+                          fontFamily: "medium",
+                        ),
+                      ),
+                      Text(
+                        widget.work,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey,
+                          fontFamily: "medium",
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          if (widget.family != "")
+            Row(
+              children: [
+                Icon(Icons.family_restroom,
+                    color: Color.fromARGB(255, 10, 10, 10)),
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Family",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color.fromARGB(255, 9, 9, 9),
+                          fontFamily: "medium",
+                        ),
+                      ),
+                      Text(
+                        widget.family,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey,
+                          fontFamily: "medium",
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          if (widget.habit != "")
+            Row(
+              children: [
+                Icon(Icons.hourglass_bottom_outlined,
+                    color: Color.fromARGB(255, 10, 10, 10)),
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Habit",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color.fromARGB(255, 9, 9, 9),
+                          fontFamily: "medium",
+                        ),
+                      ),
+                      Text(
+                        widget.habit,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey,
+                          fontFamily: "medium",
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          if (widget.smoking != "")
+            Row(
+              children: [
+                Icon(Icons.smoking_rooms,
+                    color: Color.fromARGB(255, 10, 10, 10)),
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Smoking",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color.fromARGB(255, 9, 9, 9),
+                          fontFamily: "medium",
+                        ),
+                      ),
+                      Text(
+                        widget.smoking,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey,
+                          fontFamily: "medium",
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          if (widget.drinking != "")
+            Row(
+              children: [
+                Icon(Icons.local_drink_outlined,
+                    color: Color.fromARGB(255, 10, 10, 10)),
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Drinking",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color.fromARGB(255, 9, 9, 9),
+                          fontFamily: "medium",
+                        ),
+                      ),
+                      Text(
+                        widget.drinking,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey,
+                          fontFamily: "medium",
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          if (love != null && love!.isNotEmpty)
+            Row(
+              children: [
+                Icon(Icons.category, color: Color.fromARGB(255, 10, 10, 10)),
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Love",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color.fromARGB(255, 9, 9, 9),
+                          fontFamily: "medium",
+                        ),
+                      ),
+                      Text(
+                        love!.join(
+                            ', '), // Use a comma and space as the delimiter
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey,
+                          fontFamily: "medium",
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          const SizedBox(height: 16),
+          if (widget.description != "")
+            InkWell(
+              onTap: () {
+                // Xử lý khi InkWell được nhấn
+              },
+              child: Row(
+                children: const [
+                  Icon(Icons.format_quote,
+                      color: Color.fromARGB(255, 10, 10, 10)),
+                  SizedBox(width: 10),
+                  Text(
+                    'About',
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                  ),
+                ],
+              ),
+            ),
           const SizedBox(height: 5),
-          const Text(
-              'Hello everyone, this is john and this is details for testing. this is about dummy details. Vivera quies vivamu mi in turple. Sit Bandiya dofa cras semper phasellus sed ulthrieds. no where over the horiiszon. this is dummy text.',
+          Text(widget.description,
               style: TextStyle(
                   fontSize: 14, color: Colors.grey, fontFamily: "medium")),
         ],

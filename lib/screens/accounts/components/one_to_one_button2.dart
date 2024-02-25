@@ -71,7 +71,7 @@ class _OneToOne2ButtonState extends State<OneToOne2> {
           selectedFilters.add(user!.address!);
         } else {
           // Change the format to "adr" + Value
-          String updatedName = "adr" + Uri.encodeComponent(name);
+          String updatedName = "des" + Uri.encodeComponent(name);
           _userService.updateUserPurpose(id, updatedName);
           print(updatedName);
         }

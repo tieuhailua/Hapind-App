@@ -93,13 +93,13 @@ class _LikeState extends State<LikePage> {
             photos: items,
             text: user.email ?? '',
             age: (currentDate.year - (user.dob?.year ?? 0)),
-            km: Random().nextInt(30) + 1,
+            km: user.distance ?? 1,
           ),
           onSlideUpdate: (SlideRegion? region) async {
             if (region == SlideRegion.inLikeRegion) {
               setState(() {
                 isLike = true;
-                status = -3;
+                status = -1;
               });
             } else if (region == SlideRegion.inNopeRegion) {
               setState(() {
@@ -109,6 +109,7 @@ class _LikeState extends State<LikePage> {
             } else if (region == SlideRegion.inSuperLikeRegion) {
               setState(() {
                 isSuperLike = true;
+                status = -1;
               });
             } else {
               setState(() {
@@ -140,7 +141,7 @@ class _LikeState extends State<LikePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Looking for love',
+                    'Listen to your heart',
                   ),
                   IconButton(
                       onPressed: () {
@@ -468,6 +469,8 @@ class _LikeState extends State<LikePage> {
                                                                 builder:
                                                                     (context) =>
                                                                         DetailsPage(
+                                                                  id: user.id ??
+                                                                      0,
                                                                   name: user
                                                                           .fullname ??
                                                                       "Default Name",
@@ -486,12 +489,14 @@ class _LikeState extends State<LikePage> {
                                                                   city: user
                                                                           .address ??
                                                                       "Default address",
-                                                                  state: user
-                                                                          .address ??
-                                                                      "Default address",
-                                                                  country: user
-                                                                          .address ??
-                                                                      "Default address",
+                                                                  state: "",
+                                                                  //  user
+                                                                  //         .address ??
+                                                                  //     "Default address",
+                                                                  country: "",
+                                                                  //  user
+                                                                  //         .address ??
+                                                                  //     "Default address",
                                                                   phone: user
                                                                           .phone ??
                                                                       "Default phone",
@@ -503,6 +508,56 @@ class _LikeState extends State<LikePage> {
                                                                           ?.first
                                                                           .imagePath ??
                                                                       "",
+                                                                  DOB: user?.dob
+                                                                          .toString() ??
+                                                                      "",
+                                                                  purpose: user
+                                                                          ?.purpose
+                                                                          ?.name ??
+                                                                      "",
+                                                                  description:
+                                                                      user?.description ??
+                                                                          "",
+                                                                  weight: user
+                                                                          ?.weight
+                                                                          .toString() ??
+                                                                      "",
+                                                                  height: user
+                                                                          ?.height
+                                                                          .toString() ??
+                                                                      "",
+                                                                  drinking: user
+                                                                          ?.drinking
+                                                                          ?.name ??
+                                                                      "",
+                                                                  family: user
+                                                                          ?.family
+                                                                          ?.name ??
+                                                                      "",
+                                                                  habit: user
+                                                                          ?.habit
+                                                                          ?.name ??
+                                                                      "",
+                                                                  literacy: user
+                                                                          ?.literacy
+                                                                          ?.name ??
+                                                                      "",
+                                                                  smoking: user
+                                                                          ?.smoking
+                                                                          ?.name ??
+                                                                      "",
+                                                                  work: user
+                                                                          ?.work
+                                                                          ?.name ??
+                                                                      "",
+                                                                  sport: user
+                                                                      ?.userExercises,
+                                                                  music: user
+                                                                      ?.userMusics,
+                                                                  pet: user
+                                                                      ?.userPets,
+                                                                  singer: user
+                                                                      ?.userSingers,
                                                                 ),
                                                               ),
                                                             );
@@ -683,8 +738,8 @@ class _LikeState extends State<LikePage> {
                                         border: Border.all(
                                           color: const Color(0xFF6EE6BA),
                                         ),
-                                        color: isNope
-                                            ? const Color(0xFF6EE6BA)
+                                        color: isLike
+                                            ? Color.fromARGB(255, 222, 245, 236)
                                             : Colors.transparent,
                                       ),
                                       padding: const EdgeInsets.all(1),

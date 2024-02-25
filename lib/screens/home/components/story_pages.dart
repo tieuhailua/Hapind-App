@@ -81,7 +81,7 @@ class _MainPageState extends State<MainPage> {
     //List data = jsonDecode(response.body)['results'];
     int? id = await _tokenService.getStoredUserId();
     User? user =
-        await _matchingService.getUserForMatching(id, 16, 80, 100) ?? null;
+        await _matchingService.getUserForMatching(id, await _tokenService.getStoredMinAge()??16, await _tokenService.getStoredMaxAge()??20, await _tokenService.getStoredDistance()??100);
     setState(() {
       usersData = user;
       items = user?.userImages?.map((image) => image.imagePath).toList() ?? [];
@@ -105,7 +105,7 @@ class _MainPageState extends State<MainPage> {
             photos: items,
             text: usersData?.email ?? '',
             age: (currentDate.year - (usersData?.dob?.year ?? 0)),
-            km: Random().nextInt(30) + 1,
+            km: usersData?.distance  ?? 1,
           ),
           onSlideUpdate: (SlideRegion? region) async {
             if (region == SlideRegion.inLikeRegion) {
@@ -127,6 +127,7 @@ class _MainPageState extends State<MainPage> {
             } else if (region == SlideRegion.inSuperLikeRegion) {
               setState(() {
                 isSuperLike = true;
+                status = -3;
               });
             } else {
               setState(() {
@@ -448,12 +449,14 @@ class _MainPageState extends State<MainPage> {
                                                         child:
                                                             ElevatedButton.icon(
                                                           onPressed: () {
+                                                            print(usersData?.userMusics?.isNotEmpty);
                                                             Navigator.push(
                                                               context,
                                                               MaterialPageRoute(
                                                                 builder:
                                                                     (context) =>
                                                                         DetailsPage(
+                                                                          id:usersData?.id??0,
                                                                   name: usersData
                                                                           ?.fullname ??
                                                                       "Default Name",
@@ -469,15 +472,19 @@ class _MainPageState extends State<MainPage> {
                                                                   gender: usersData
                                                                           ?.gender ??
                                                                       "Default gender",
-                                                                  city: usersData
+                                                                  city:
+                                                                   usersData
                                                                           ?.address ??
                                                                       "Default address",
-                                                                  state: usersData
-                                                                          ?.address ??
-                                                                      "Default address",
-                                                                  country: usersData
-                                                                          ?.address ??
-                                                                      "Default address",
+                                                                  state:
+                                                                  //  usersData
+                                                                  //         ?.address ??
+                                                                  //     "Default address",
+                                                                  "",
+                                                                  country:"",
+                                                                  //  usersData
+                                                                  //         ?.address ??
+                                                                  //     "Default address",
                                                                   phone: usersData
                                                                           ?.phone ??
                                                                       "Default phone",
@@ -489,6 +496,21 @@ class _MainPageState extends State<MainPage> {
                                                                           ?.first
                                                                           .imagePath ??
                                                                       "",
+                                                                      DOB: usersData?.dob.toString() ??"",
+                                                  purpose: usersData?.purpose?.name ??"",
+                                                  description: usersData?.description??"",
+                                                  weight: usersData?.weight.toString() ??"null",
+                                                  height: usersData?.height.toString() ??"null",
+                                                  drinking: usersData?.drinking?.name ??"",
+                                                  family: usersData?.family?.name ??"",
+                                                  habit: usersData?.habit?.name ??"",
+                                                  literacy: usersData?.literacy?.name ??"",
+                                                  smoking: usersData?.smoking?.name ??"",
+                                                  work: usersData?.work?.name ??"",
+                                                  sport: usersData?.userExercises ,
+                                                  music: usersData?.userMusics,
+                                                  pet: usersData?.userPets,
+                                                  singer: usersData?.userSingers,
                                                                 ),
                                                               ),
                                                             );
@@ -794,8 +816,8 @@ class _MainPageState extends State<MainPage> {
                                         border: Border.all(
                                           color: const Color(0xFF6EE6BA),
                                         ),
-                                        color: isNope
-                                            ? const Color(0xFF6EE6BA)
+                                        color: isLike
+                                            ? Color.fromARGB(255, 191, 239, 221)
                                             : Colors.transparent,
                                       ),
                                       padding: const EdgeInsets.all(1),

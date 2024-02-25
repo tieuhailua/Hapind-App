@@ -51,19 +51,19 @@ class _CompleteDistanceFormState extends State<CompleteDistanceForm> {
   }
 
   void signUp() async {
-                      final authService =
-                          Provider.of<AuthService>(context, listen: false);
-                      try {
-                        await authService.signUpWithEmailAndPassword(
-                            user.email ?? "", user.password);
-                      } catch (e) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(e.toString()),
-                          ),
-                        );
-                      }
-                    }
+    final authService = Provider.of<AuthService>(context, listen: false);
+    try {
+      await authService.signUpWithEmailAndPassword(
+          user.email ?? "", user.password);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.toString()),
+        ),
+      );
+    }
+  }
+
   // @override
   // Widget build(BuildContext context) {
   //   return Scaffold(

@@ -1,8 +1,8 @@
 abstract class BaseApi{
-  late String url = "https://d969-113-161-76-176.ngrok-free.app";
+  late String url = "http://192.168.21.101:2203";
   
 }
-
+// 192.168.21.103
 //home 192.168.2.16 || 192.168.2.11
 //rovina 192.168.13.173
 //school 192.168.1.14

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:hapind/model/matching.dart';
 import 'package:hapind/model/user.dart';
+// ignore: unused_import
 import 'package:hapind/model/user_string.dart';
 import 'package:hapind/service/api/base_api.dart';
 import 'package:http/http.dart' as http;
@@ -184,7 +185,7 @@ class MatchingService extends BaseApi {
             "/getRandomUser/$loginUserId/$minAge/$maxAge/$maxDistance"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          //'Authorization': 'Bearer $token',
+         // 'Authorization': 'Bearer $token',
         },
       );
 
@@ -225,6 +226,7 @@ class MatchingService extends BaseApi {
         throw error;
       } else {
         print("Unexpected 4: $error");
+       
         // Handle other types of errors or rethrow if needed
         throw error;
       }
@@ -246,6 +248,7 @@ class MatchingService extends BaseApi {
 
         if (responseData != null) {
           print(Matching.fromJson(jsonDecode(response.body)));
+          
           //return User.fromJson(response.body);
           //return parseList(response.body);
           //return List<String>.fromJson(jsonDecode(response.body));
@@ -280,4 +283,18 @@ class MatchingService extends BaseApi {
       }
     }
   }
+  Future<void> fetchData() async {
+  print('Fetching data...');
+  await Future.delayed(Duration(seconds: 2)); // Simulating a delay
+  print('Data fetched.');
+}
+
+void main() {
+  print('Start of main function');
+  fetchData().then((_) {
+    print('Data processing complete.');
+  });
+  print('End of main function');
+}
+
 }

@@ -12,6 +12,7 @@ class Report {
   User? userByReportedId;
   User? userByReporterId;
   String? description;
+  String? status;
   @TimestampConverter()
   DateTime? createdAt;
   Set<Evidence>? evidences;
@@ -22,6 +23,7 @@ class Report {
     this.userByReportedId,
     this.userByReporterId,
     this.description,
+    this.status,
     this.createdAt,
     this.evidences,
   });
@@ -46,6 +48,7 @@ class Report {
       'userByReportedId': userByReportedId?.toMap(),
       'userByReporterId': userByReporterId?.toMap(),
       'description': description,
+      'status': status,
       'createdAt': createdAt?.toIso8601String(),
       'evidences': evidences?.map((evidence) => evidence.toMap())?.toList(),
     };

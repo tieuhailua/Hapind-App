@@ -5,7 +5,7 @@ import 'package:hapind/model/user.dart';
 import 'package:hapind/model/user_token.dart';
 
 class TokenService {
-  final storage = new FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
 
   Future<void> saveUserTokenData(UserToken userToken) async {
     await storage.write(key: 'data', value: UserToken.serialize(userToken));
@@ -15,11 +15,51 @@ class TokenService {
     await storage.write(key: 'userId', value: id.toString());
   }
 
+  Future<void> setStoredDistance(String id) async {
+    await storage.write(key: 'distance', value: id.toString());
+  }
+  Future<void> setStoredMinAge(String id) async {
+    await storage.write(key: 'minAge', value: id.toString());
+  }
+  Future<void> setStoredMaxAge(String id) async {
+    await storage.write(key: 'maxAge', value: id.toString());
+  }
+
+  Future<void> storeUserEmail(String email) async {
+    await storage.write(key: 'email', value: email.toString());
+  }
+
   Future<int?> getStoredUserId() async {
     String? idString = await storage.read(key: 'userId');
     return idString != null ? int.tryParse(idString) : null;
   }
 
+  Future<int?> getStoredMinAge() async {
+    String? idString = await storage.read(key: 'minAge');
+    return idString != null ? int.tryParse(idString) : null;
+  }
+
+  Future<int?> getStoredMaxAge() async {
+    String? idString = await storage.read(key: 'maxAge');
+    return idString != null ? int.tryParse(idString) : null;
+  }
+
+  Future<int?> getStoredDistance() async {
+    String? idString = await storage.read(key: 'distance');
+    return idString != null ? int.tryParse(idString) : null;
+  }
+
+  Future<String?> getStoredUserEmail() async {
+    String? idString = await storage.read(key: 'email');
+    return idString != null ? idString : null;
+  }
+
+  
+
+  Future<void> clearUserId() async {
+    await storage.delete(key: 'userId');
+  }
+  
   Future<void> saveUserData(User? user) async {
     String userJson = json.encode(user?.toJson());
     await storage.write(key: 'user_data', value: userJson);
@@ -38,8 +78,9 @@ class TokenService {
     await storage.delete(key: 'user_data');
   }
 
-  Future<void> clearUserId() async {
-    await storage.delete(key: 'userId');
+  
+  Future<void> clearUserEmail() async {
+    await storage.delete(key: 'email');
   }
   // Future<Map<String, String?>> readUserData() async {
   //   return await storage.readAll();

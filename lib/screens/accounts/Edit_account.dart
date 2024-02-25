@@ -2,8 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:hapind/model/user_image.dart';
-import 'package:hapind/screens/accounts/components/%20family_buttton.dart';
-import 'package:hapind/screens/accounts/components/%20purpose_button.dart';
 import 'package:hapind/screens/accounts/components/Exercise_button.dart';
 import 'package:hapind/screens/accounts/components/Gender_button.dart';
 import 'package:hapind/screens/accounts/components/Work_button.dart';
@@ -170,7 +168,7 @@ class _MyAccount extends State<MyAccount> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
                   Text(
-                    "My preference ",
+                    "Details",
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 18,
@@ -179,7 +177,7 @@ class _MyAccount extends State<MyAccount> {
                 ],
               ),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
               OneToOne2(
                 folderName: "Description",
@@ -205,6 +203,16 @@ class _MyAccount extends State<MyAccount> {
               SizedBox(
                 height: 10,
               ),
+              // Text(
+              //   "One Choice",
+              //   style: TextStyle(
+              //       color: Colors.black,
+              //       fontSize: 18,
+              //       fontWeight: FontWeight.bold),
+              // ),
+              // SizedBox(
+              //   height: 10,
+              // ),
               OneToOne2(
                 folderName: "Gender",
               ),
@@ -266,13 +274,13 @@ class _MyAccount extends State<MyAccount> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
-                  Text(
-                    "My preference số nhiều ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
-                  ),
+                  // Text(
+                  //   "Multi Choice",
+                  //   style: TextStyle(
+                  //       color: Colors.black,
+                  //       fontSize: 18,
+                  //       fontWeight: FontWeight.bold),
+                  // ),
                 ],
               ),
               SizedBox(
@@ -498,6 +506,13 @@ class _MyAccount extends State<MyAccount> {
                 Positioned.fill(
                   child: CircleAvatar(
                     backgroundImage: AssetImage('assets/images/loading.jpg'),
+                  ),
+                )
+              else if (imageUrl.isEmpty)
+                Positioned.fill(
+                  child: Image.network(
+                    "https://res.cloudinary.com/dmkw4f8iw/image/upload/v1708590938/Screenshot_2024-02-22_153511_zm3nse.png",
+                    fit: BoxFit.cover,
                   ),
                 )
               else

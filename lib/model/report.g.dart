@@ -18,6 +18,7 @@ Report _$ReportFromJson(Map<String, dynamic> json) => Report(
           ? null
           : User.fromJson(json['userByReporterId'] as Map<String, dynamic>),
       description: json['description'] as String?,
+      status: json['status'] as String?,
       createdAt: const TimestampConverter().fromJson(json['createdAt'] as int?),
       evidences: (json['evidences'] as List<dynamic>?)
           ?.map((e) => Evidence.fromJson(e as Map<String, dynamic>))
@@ -30,6 +31,7 @@ Map<String, dynamic> _$ReportToJson(Report instance) => <String, dynamic>{
       'userByReportedId': instance.userByReportedId?.toJson(),
       'userByReporterId': instance.userByReporterId?.toJson(),
       'description': instance.description,
+      'status': instance.status,
       'createdAt': const TimestampConverter().toJson(instance.createdAt),
       'evidences': instance.evidences?.map((e) => e.toJson()).toList(),
     };
