@@ -10,7 +10,7 @@
 ![Preview](/intro.gif)
 
 ## Screens it contains:
-
+https://github.com/tieuhailua/Hapind-App/issues/1#issue-2152774524
 Images project :
 If you want to see a project description, please see the images at images isses or contact us
 
